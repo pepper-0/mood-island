@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mood island</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>look, it's a mood island!</h1>
+    <p>click below to add a plant (diary) entry</p>
+
+    <!--taken from express; diary entry form-->
+    <form id="plant-form">
+        <input id="title" name="title" placeholder="title" maxlength="50">
+        <br/>
+        <textarea placeholder="entry" id="entry"></textarea>
+        <br/>
+        <button type="submit">submit</button>
+    </form>
+
+    <div id="entries">
+        <!-- diary entries will be appended here -->
+
+    </div>
+</body>
+</html>
