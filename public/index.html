@@ -8,23 +8,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class = "sidebar-button">what's mood island? (faq)</div>
-        <div class = "sidebar-button">credits & documentation</div>
-    </nav>
     <div id = "play-area">
+        <nav>
+            <div class = "sidebar-button" id = "sidebar-info" >what's mood island? (faq)</div>
+            <div class = "sidebar-button" id = "sidebar-documentation">credits & documentation</div>
+        </nav>
         <div id = "sidebar" class = "sidebar">
-            <div class = "sidebar-button">↩</div>
+            <div class = "sidebar-button" id = "sidebar-close">↩</div>
             <div id = "sidebar-content">
                 <!-- sidebar content will be inserted here -->
+                 
             </div>
         </div>
+        <h1>look, it's the internet's mood island!</h1>
+        <div id = "toolkit">
+            <!-- includes all the editing modes which is a drop down that can be opened up: plant, shovel, water -->
+            <div id = "toolkit-button">🛠️</div>
+            <div id = "toolkit-content">
+                <div class = "toolkit-option" id = "toolkit-plant">🌱</div>
+                <div class = "toolkit-option" id = "toolkit-shovel">⛏️</div>
+                <div class = "toolkit-option" id = "toolkit-water">💧</div>
+        </div>
         <main>
-            <h1>look, it's the internet's mood island!</h1>
-            <p>click below to add a plant (diary) entry</p>
 
             <!--taken from express; diary entry form-->
             <form id="plant-form">
+                <p>click below to add a plant (diary) entry</p>
                 <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
                 <br/>
                 <input id="title" name="title" placeholder="title" maxlength="50">
