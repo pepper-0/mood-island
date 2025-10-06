@@ -1,6 +1,16 @@
 [
-    {
-        "title": "a test (9/24/2025)",
-        "entry": "this is the first day of mood island. it's also my first time doing backend programming, so i'm figuring out how to configure a basic plant entry functionality"
-    }
+  {
+    "title": "a test (9/24/2025)",
+    "entry": "this is the first day of mood island..."
+  },
+  {
+    "title": "hi",
+    "entry": "hi",
+    "date": "2025-10-06"
+  },
+  {
+    "title": "hello",
+    "entry": "it actually works for once.",
+    "date": "2025-10-06"
+  }
 ]

@@ -1,0 +1,16 @@
+{
+  "name": "mood-island",
+  "version": "1.0.0",
+  "description": "Plant-themed mood diary recorded on an island",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": ["mood", "diary", "plants", "express"],
+  "author": "",
+  "license": "MIT"
+}
