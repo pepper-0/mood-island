@@ -4,6 +4,22 @@
 document.getElementById("plant-form").addEventListener("submit", plantSubmit); // to submit your plant diary entry
 var entries = document.getElementById("entries"); // to update the entries shown in the page
 
+const tiles = document.getElementsByClassName("tile").addEventListener("click", openPlant);
+const allPlants = []; // will hold all plant entries
+// TODO: these are the tiles that also hold the plants; we need to link them together.
+    // do so with loop:
+// for (let tile of tiles) {
+//     const tileID = tile.id;
+//     // Find the plant(s) for this tile
+//     const plantsForTile = allPlants.filter(plant => plant.tileID === tileID);
+//     // Display plant info in the tile
+//     plantsForTile.forEach(plant => {
+//         tile.innerHTML += `<h3>${plant.title}</h3><p>${plant.entry}</p><small>${plant.date}</small>`;
+//     });
+// }
+
+
+
 updateEntriesInPage(); // call function to load existing entries when page loads
 
 async function plantSubmit(e) {
@@ -12,7 +28,10 @@ async function plantSubmit(e) {
     // create data entry object
     const dataEntry = {
         // e.target is the form that was submitted
+        tileID: e.target.title.value,
         title: e.target.title.value,
+        erased: false,
+        eraseCode: e.target.eraseCode.value,
         entry: e.target.entry.value,
         // taken straight from copilot lols, takes date and turns it into date str
         date: new Date().toISOString().split("T")[0]
