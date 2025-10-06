@@ -27,15 +27,19 @@ function toggleSidebar() {
 }
 
     // Toolkit
-document.getElementById("toolkit-button").addEventListener("click", toggleToolkit);
+var toolkitButton = document.getElementById("toolkit-button");
+toolkitButton.addEventListener("click", toggleToolkit);
 function toggleToolkit() {
-    //var toolkitButton = document.getElementById("toolkit-button");
+    console.log("toolkit button clicked");
     var toolkitContent = document.getElementById("toolkit-content");
-    if (toolkitContent.style.display === "none") {
-        //toolkitButton.style.transform = "rotate(90deg)"; // rotate button when clicked
+
+    if (window.getComputedStyle(toolkitContent).display == "none") {
+        console.log("opening toolkit");
+        toolkitButton.style.transform = "rotate(90deg)"; // rotate button when clicked
         toolkitContent.style.display = "flex";
-    } else if (toolkitContent.style.display === "flex") {
-        //toolkitButton.style.transform = "rotate(-90deg)"; // rotate button when clicked
+    } else if (window.getComputedStyle(toolkitContent).display == "flex") {
+        console.log("closing toolkit");
+        toolkitButton.style.transform = "rotate(0deg)"; // un-rotate button when clicked
         toolkitContent.style.display = "none";
         featureMode = 0; // reset feature mode when closing toolkit, safety feature
     }

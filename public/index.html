@@ -8,77 +8,80 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id = "play-area">
-        <nav>
-            <div class = "sidebar-button" id = "sidebar-info" >what's mood island? (faq)</div>
-            <div class = "sidebar-button" id = "sidebar-documentation">credits & documentation</div>
-        </nav>
-        <div id = "sidebar" class = "sidebar">
-            <div class = "sidebar-button" id = "sidebar-close">↩</div>
-            <div id = "sidebar-content">
-                <!-- sidebar content will be inserted here -->
-                 
-            </div>
+    <nav>
+        <div class = "sidebar-button" id = "sidebar-info" >what's mood island? (faq)</div>
+        <div class = "sidebar-button" id = "sidebar-documentation">credits & documentation</div>
+    </nav>
+    <div id = "sidebar" class = "sidebar">
+        <div class = "sidebar-button" id = "sidebar-close">↩</div>
+        <div id = "sidebar-content">
+            <!-- sidebar content will be inserted here -->
+                
         </div>
-        <h1>look, it's the internet's mood island!</h1>
-        <div id = "toolkit">
-            <!-- includes all the editing modes which is a drop down that can be opened up: plant, shovel, water -->
-            <div id = "toolkit-button">🛠️</div>
-            <div id = "toolkit-content">
-                <div class = "toolkit-option" id = "toolkit-plant">🌱</div>
-                <div class = "toolkit-option" id = "toolkit-shovel">⛏️</div>
-                <div class = "toolkit-option" id = "toolkit-water">💧</div>
-        </div>
-        <main>
-
-            <!--taken from express; diary entry form-->
-            <form id="plant-form">
-                <p>click below to add a plant (diary) entry</p>
-                <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
-                <br/>
-                <input id="title" name="title" placeholder="title" maxlength="50">
-                <br/>
-                <input id="eraseCode" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
-                <br/>
-                <textarea placeholder="entry" id="entry"></textarea>
-                <br/>
-                <button type="submit">submit</button>
-            </form>
-
-            <br/>
-            <h2>the island</h2>
-
-            <div id="island">
-                <div class="tile" id="1">
-                    <img src="assets/flowers/orange_flower.png" class = "plantIcon">
-                </div>
-                <div class="tile" id="2">
-                    <img src="assets/flowers/pink_flower.png" class = "plantIcon">
-                </div>
-                <div class="tile" id="3">3</div>
-                <div class="tile" id="4">4</div>
-                <div class="tile" id="5">5</div>
-                <div class="tile" id="6">6</div>
-                <div class="tile" id="7">7</div>
-                <div class="tile" id="8">8</div>
-                <div class="tile" id="9">9</div>
-                <div class="tile" id="10">10</div>
-                <div class="tile" id="11">11</div>
-                <div class="tile" id="12">12</div>
-                <div class="tile" id="13">13</div>
-                <div class="tile" id="14">14</div>
-                <div class="tile" id="15">15</div>
-                <div class="tile" id="16">16</div>
-            </div>
-
-            <br/>
-            <h2>all diary entries</h2>
-
-            <div id="entries">
-                <!-- diary entries will be appended here -->
-
-            </div>
-        </main>
     </div>
+    <h1>look, it's the internet's mood island!</h1>
+    <div id = "toolkit">
+        <!-- includes all the editing modes which is a drop down that can be opened up: plant, shovel, water -->
+        <div id = "toolkit-button">🛠️</div>
+        <div id = "toolkit-content">
+            <div class = "toolkit-option" id = "toolkit-plant">🌱</div>
+            <div class = "toolkit-option" id = "toolkit-shovel">⛏️</div>
+            <div class = "toolkit-option" id = "toolkit-water">💧</div>
+        </div>
+    </div>
+    <br/>
+    <main>
+        <div id = "play-area">
+            <div>
+                <h2>your current mode</h2>
+                <form id="plant-form"> <!--taken from express; diary entry form-->
+                    <p>click below to add a plant (diary) entry</p>
+                    <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
+                    <br/>
+                    <input id="title" name="title" placeholder="title" maxlength="50">
+                    <br/>
+                    <input id="eraseCode" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
+                    <br/>
+                    <textarea placeholder="entry" id="entry"></textarea>
+                    <br/>
+                    <button type="submit">submit</button>
+                </form>
+                <div id = "deletion">
+                </div>
+            </div>
+
+            <div id = "islandPlatform">
+                <h2>the island</h2>
+                <div id="island">
+                    <div class="tile" id="1">
+                        <img src="assets/flowers/orange_flower.png" class = "plantIcon">
+                    </div>
+                    <div class="tile" id="2">
+                        <img src="assets/flowers/pink_flower.png" class = "plantIcon">
+                    </div>
+                    <div class="tile" id="3">3</div>
+                    <div class="tile" id="4">4</div>
+                    <div class="tile" id="5">5</div>
+                    <div class="tile" id="6">6</div>
+                    <div class="tile" id="7">7</div>
+                    <div class="tile" id="8">8</div>
+                    <div class="tile" id="9">9</div>
+                    <div class="tile" id="10">10</div>
+                    <div class="tile" id="11">11</div>
+                    <div class="tile" id="12">12</div>
+                    <div class="tile" id="13">13</div>
+                    <div class="tile" id="14">14</div>
+                    <div class="tile" id="15">15</div>
+                    <div class="tile" id="16">16</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>all diary entries</h2>
+        <div id="entries">
+            <!-- diary entries will be appended here -->
+        </div>
+
+    </main>
 </body>
 </html>

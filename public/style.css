@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #d5e0e9;
+    display:block;
 }
 
 #main {
@@ -55,14 +56,18 @@ nav {
 }
 
 /* Toolkit styles */
+#toolkit {
+    display: flex;
+    align-items: center;
+}
 #toolkit-button {
-    display: inline-block;
     padding: 10px;
-    transform: rotate(90deg);
+    transition: transform 0.3s ease;
     font-size: 24px;
 }
 #toolkit-button:hover {
     cursor: pointer;
+    transform: scale(1.2);
 }
 #toolkit-content {
     display: none;
@@ -82,6 +87,14 @@ nav {
     display: none;
 }
 
+/* Play area styles */
+#play-area {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
 
 /* Island styles */
 #island {
