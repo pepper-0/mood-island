@@ -8,48 +8,68 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>look, it's a mood island!</h1>
-    <p>click below to add a plant (diary) entry</p>
-
-    <!--taken from express; diary entry form-->
-    <form id="plant-form">
-        <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
-        <br/>
-        <input id="title" name="title" placeholder="title" maxlength="50">
-        <br/>
-        <input id="eraseCode" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
-        <br/>
-        <textarea placeholder="entry" id="entry"></textarea>
-        <br/>
-        <button type="submit">submit</button>
-    </form>
-
-    <div id="entries">
-        <!-- diary entries will be appended here -->
-
-    </div>
-    <h2>the internet's mood island:</h2>
-    <div id="island">
-        <div class="tile" id="tile1">
-            <img src="../assets/flowers/orange_flower.png" class = "plantIcon">
+    <nav>
+        <div class = "sidebar-button">what's mood island? (faq)</div>
+        <div class = "sidebar-button">credits & documentation</div>
+    </nav>
+    <div id = "play-area">
+        <div id = "sidebar" class = "sidebar">
+            <div class = "sidebar-button">↩</div>
+            <div id = "sidebar-content">
+                <!-- sidebar content will be inserted here -->
+            </div>
         </div>
-        <div class="tile" id="tile2">
-            <img src="../assets/flowers/pink_flower.png" class = "plantIcon">
-        </div>
-        <div class="tile" id="tile3">3</div>
-        <div class="tile" id="tile4">4</div>
-        <div class="tile" id="tile5">5</div>
-        <div class="tile" id="tile6">6</div>
-        <div class="tile" id="tile7">7</div>
-        <div class="tile" id="tile8">8</div>
-        <div class="tile" id="tile9">9</div>
-        <div class="tile" id="tile10">10</div>
-        <div class="tile" id="tile11">11</div>
-        <div class="tile" id="tile12">12</div>
-        <div class="tile" id="tile13">13</div>
-        <div class="tile" id="tile14">14</div>
-        <div class="tile" id="tile15">15</div>
-        <div class="tile" id="tile16">16</div>
+        <main>
+            <h1>look, it's the internet's mood island!</h1>
+            <p>click below to add a plant (diary) entry</p>
+
+            <!--taken from express; diary entry form-->
+            <form id="plant-form">
+                <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
+                <br/>
+                <input id="title" name="title" placeholder="title" maxlength="50">
+                <br/>
+                <input id="eraseCode" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
+                <br/>
+                <textarea placeholder="entry" id="entry"></textarea>
+                <br/>
+                <button type="submit">submit</button>
+            </form>
+
+            <br/>
+            <h2>the island</h2>
+
+            <div id="island">
+                <div class="tile" id="1">
+                    <img src="assets/flowers/orange_flower.png" class = "plantIcon">
+                </div>
+                <div class="tile" id="2">
+                    <img src="assets/flowers/pink_flower.png" class = "plantIcon">
+                </div>
+                <div class="tile" id="3">3</div>
+                <div class="tile" id="4">4</div>
+                <div class="tile" id="5">5</div>
+                <div class="tile" id="6">6</div>
+                <div class="tile" id="7">7</div>
+                <div class="tile" id="8">8</div>
+                <div class="tile" id="9">9</div>
+                <div class="tile" id="10">10</div>
+                <div class="tile" id="11">11</div>
+                <div class="tile" id="12">12</div>
+                <div class="tile" id="13">13</div>
+                <div class="tile" id="14">14</div>
+                <div class="tile" id="15">15</div>
+                <div class="tile" id="16">16</div>
+            </div>
+
+            <br/>
+            <h2>all diary entries</h2>
+
+            <div id="entries">
+                <!-- diary entries will be appended here -->
+
+            </div>
+        </main>
     </div>
 </body>
 </html>

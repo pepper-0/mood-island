@@ -1,6 +1,6 @@
 [
   {
-    "tileID": 0,
+    "tileID": 1,
     "title": "a test by jana",
     "erased": false,
     "eraseCode": "DONOTERASE",
@@ -8,7 +8,7 @@
     "date": "2025-09-24"
   },
   {
-    "tileID": 1,
+    "tileID": 2,
     "title": "a secondary test by jana",
     "erased": false,
     "eraseCode": "DONOTERASE",
@@ -16,11 +16,19 @@
     "date": "2025-10-06"
   },
   {
-    "tileID": 2,
+    "tileID": 3,
     "title": "just added an erase code",
     "erased": false,
     "eraseCode": "test",
     "entry": "ok, let's see if this works! haven't made the deletion implementation though.",
+    "date": "2025-10-06"
+  },
+  {
+    "tileID": "hi this is a test as i lose my mind overlife",
+    "title": "hi this is a test as i lose my mind overlife",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "what am i even doing now",
     "date": "2025-10-06"
   }
 ]
