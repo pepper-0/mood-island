@@ -34,7 +34,7 @@
         <div id = "play-area">
             <div>
                 <h2>your current mode</h2>
-                <form id="plant-form"> <!--taken from express; diary entry form-->
+                <form id="plant-form" class = "tool-content"> <!--taken from express; diary entry form-->
                     <p>click below to add a plant (diary) entry</p>
                     <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
                     <br/>
@@ -46,7 +46,17 @@
                     <br/>
                     <button type="submit">submit</button>
                 </form>
-                <div id = "deletion">
+                <div id = "weeding" class = "tool-content">
+                    <p>you can weed out (remove) diary entries here</p>
+                    <form id = "weeding-form"> 
+
+                    </form>
+                </div>
+                <div id = "watering" class="tool-content" >
+                    <p>you can water (update) diary entries here</p>
+                    <form id = "watering-form"> 
+
+                    </form>
                 </div>
             </div>
 
@@ -76,7 +86,7 @@
                 </div>
             </div>
         </div>
-        
+
         <h2>all diary entries</h2>
         <div id="entries">
             <!-- diary entries will be appended here -->

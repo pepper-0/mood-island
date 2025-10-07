@@ -81,11 +81,11 @@ nav {
     transition: transform 0.3s ease;
     transform: scale(1.2);
 }
-
-/* Toolkit features */
-#plant-form {
+.tool-content {
     display: none;
 }
+
+/* Toolkit features */
 
 /* Play area styles */
 #play-area {

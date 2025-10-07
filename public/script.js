@@ -28,6 +28,10 @@ function toggleSidebar() {
 
     // Toolkit
 var toolkitButton = document.getElementById("toolkit-button");
+var plantForm = document.getElementById("plant-form");
+var weedingForm = document.getElementById("weeding");
+var wateringForm = document.getElementById("watering");
+
 toolkitButton.addEventListener("click", toggleToolkit);
 function toggleToolkit() {
     console.log("toolkit button clicked");
@@ -37,10 +41,14 @@ function toggleToolkit() {
         console.log("opening toolkit");
         toolkitButton.style.transform = "rotate(90deg)"; // rotate button when clicked
         toolkitContent.style.display = "flex";
+
     } else if (window.getComputedStyle(toolkitContent).display == "flex") {
         console.log("closing toolkit");
         toolkitButton.style.transform = "rotate(0deg)"; // un-rotate button when clicked
         toolkitContent.style.display = "none";
+        plantForm.style.display = "none"; // hide all forms when closing toolkit
+        weedingForm.style.display = "none";
+        wateringForm.style.display = "none";
         featureMode = 0; // reset feature mode when closing toolkit, safety feature
     }
 }
@@ -52,12 +60,22 @@ for (let option of toolkitOptions) {
 function openFeature() {
     if (this.id === "toolkit-plant") {
         featureMode = 1;
-        document.getElementById("plant-form").style.display = "block";
+        plantForm.style.display = "block";
+        weedingForm.style.display = "none";
+        wateringForm.style.display = "none";
         console.log("entered plant mode");
-    } else {
+    } else if (this.id === "toolkit-shovel") {
         featureMode = 0;
-        document.getElementById("plant-form").style.display = "none";
-        console.log("exited mode");
+        plantForm.style.display = "none";
+        weedingForm.style.display = "block";
+        wateringForm.style.display = "none";
+        console.log("entered delete mode");
+    } else if (this.id === "toolkit-water") {
+        featureMode = 0;
+        plantForm.style.display = "none";
+        weedingForm.style.display = "none";
+        wateringForm.style.display = "block";
+        console.log("entered edit mode");
     }
 }
 
