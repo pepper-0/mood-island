@@ -25,5 +25,32 @@
     "entry": "ok, let's see if this works! haven't made the deletion implementation though.",
     "date": "2025-10-06",
     "image": "assets/flowers/blue_flower.png"
+  },
+  {
+    "tileID": 16,
+    "title": "",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "",
+    "date": "",
+    "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 7,
+    "title": "",
+    "erased": true,
+    "eraseCode": "",
+    "entry": "",
+    "date": "",
+    "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 7,
+    "title": "",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "",
+    "date": "",
+    "image": "assets/flowers/succulent.png"
   }
 ]

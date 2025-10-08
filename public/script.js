@@ -81,6 +81,7 @@ function openFeature() {
 
 /* ISLAND */
 var nSlots = 4; // slots for 2D array
+var island = document.getElementById("island"); // the island div
 // tileArray: the container array (gh copilot)
 let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d global array; holds all tiles (NOT just plants, some may be EMPTY)
     Array.from({ length: nSlots }, (_, col) => ({
@@ -88,7 +89,7 @@ let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d 
     }))
 );
 
-/* PLANT SUBMISSION */
+/* PLANT SUBMISSION SETUP */
 document.getElementById("plant-form").addEventListener("submit", plantSubmit); // to submit your plant diary entry
 
 var entries = document.getElementById("entries"); // to update the entries shown in the page
@@ -113,10 +114,13 @@ for (plant of allPlants) {
     tilePlants.push(plant); // add plant to tilePlants array
 }
 
+/* PLANT SUBMISSION FUNCTIONS */
+
 // get the plant that corresponds to the tile (console log)
 function openPlant(tileID) {
-    const plant = displayedPlants[tileID]; // get plant corresponding to this tile
-    if (!plant) {
+    console.log("tileID:", tileID);
+    const plant = tilePlants.find(p => p.tileID === tileID && !p.erased); // get plant corresponding to this tile
+    if (plant == null) {
         console.log("no plant for this tile");
         return;
     } else {
@@ -177,42 +181,51 @@ async function updateEntriesInPage() {
         entries.appendChild(entryDiv); // add div to entries container in page
     });
 
-    // island display (the tiles)
-    // for now, all the items to be refreshed; later maybe adjust to tile-by-tile refresh instead 
-    for (item of tileArray) {
-        if (item.plant) {
+    // island display (the tiles). for now, all the items to be refreshed; later maybe adjust to tile-by-tile refresh instead 
+    // clear island display
+    island.innerHTML = ""; 
+    // these represent each item in tileArray
+    for (let i = 1; i <= nSlots * nSlots; i++) { // provides #, matches tileID
+        // find the corresponding plant for this tile
+        const plant = allPlants.find(p => p.tileID === i && !p.erased);
+        if (plant) {
             // display; the styling will be done here and add event listener
 
-            // // TODO: make the tiles actually display properly on the island yes 
-            // // goal: these are NOT just the plants, they are tiles that potentially hold the plants
-            // // if statement to check if theres a plant for that space? or do a for loop that runs through the plants instead of items... okay this is so weird.
-            // const tileObj = tileArray[row][col];
-            // const tileDiv = document.createElement("div");
-            // tileDiv.className = "tile";
-            // tileDiv.dataset.row = row;
-            // tileDiv.dataset.col = col;
-            // tileDiv.innerHTML = ""; // or default content
-            // tileDiv.addEventListener("click", () => {
-            //     // Access tileObj.plant here
-            //     if (tileObj.plant) {
-            //         allPlants.forEach(plant => {
-            //         const { row, col } = plant; // assuming plant has row and col properties
-            //         tileArray[row][col].plant = plant;
-            //     });
-            //     }
-            // });
-            // island.appendChild(tileDiv);
+            const row = Math.floor((i - 1) / nSlots);
+            const col = (i - 1) % nSlots;
+            tileArray[row][col].plant = plant; // update tileArray with the plant
+            
+            const item = document.createElement("div");
+            const plantIcon = document.createElement("img");
+            plantIcon.src = plant.image;
+            plantIcon.className = "plantIcon";
+            item.appendChild(plantIcon);
+            item.className = "tile";
+            item.id = i;
+            item.plant = plant; // attach plant data to the div for easy access
+
+            island.appendChild(item);
 
             item.addEventListener("click", () => {
                 openPlant(item.plant);
             });
+
+            // also add to tilePlants
+            // NOTE: may have some overlap with erase updates, keep and eye on this
+            if (!tilePlants.includes(plant)) {
+                tilePlants.push(plant);
+            }
+
         } else {
             // empty tile; display empty tile
-            item.innerHTML = ""; // clear tile
+            const item = document.createElement("div");
+            item.className = "tile";
+            item.id = i;
+            island.appendChild(item);
 
         }
     }
-
+    console.log("tilePlants:", tilePlants);
     console.log("fetched entries:", allPlants);
      
 }
