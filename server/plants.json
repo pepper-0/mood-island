@@ -5,7 +5,8 @@
     "erased": false,
     "eraseCode": "DONOTERASE",
     "entry": "this is the first day of mood island... let's see how it goes!",
-    "date": "2025-09-24"
+    "date": "2025-09-24",
+    "image": "assets/flowers/orange_flower.png"
   },
   {
     "tileID": 2,
@@ -13,7 +14,8 @@
     "erased": false,
     "eraseCode": "DONOTERASE",
     "entry": "a bit late,  but i'm finally getting to work on it again! yay.",
-    "date": "2025-10-06"
+    "date": "2025-10-06",
+    "image": "assets/flowers/pink_flower.png"
   },
   {
     "tileID": 3,
@@ -21,22 +23,7 @@
     "erased": false,
     "eraseCode": "test",
     "entry": "ok, let's see if this works! haven't made the deletion implementation though.",
-    "date": "2025-10-06"
-  },
-  {
-    "tileID": "hi this is a test as i lose my mind overlife",
-    "title": "hi this is a test as i lose my mind overlife",
-    "erased": false,
-    "eraseCode": "",
-    "entry": "what am i even doing now",
-    "date": "2025-10-06"
-  },
-  {
-    "tileID": "hola",
-    "title": "hola",
-    "erased": false,
-    "eraseCode": "",
-    "entry": "testing",
-    "date": "2025-10-06"
+    "date": "2025-10-06",
+    "image": "assets/flowers/blue_flower.png"
   }
 ]

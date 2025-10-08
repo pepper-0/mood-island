@@ -79,31 +79,41 @@ function openFeature() {
     }
 }
 
-/* PLANT SUBMISSION */
+/* ISLAND */
+var nSlots = 4; // slots for 2D array
+// tileArray: the container array (gh copilot)
+let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d global array; holds all tiles (NOT just plants, some may be EMPTY)
+    Array.from({ length: nSlots }, (_, col) => ({
+        plant: null // it will hold a plant object
+    }))
+);
 
+/* PLANT SUBMISSION */
 document.getElementById("plant-form").addEventListener("submit", plantSubmit); // to submit your plant diary entry
 
 var entries = document.getElementById("entries"); // to update the entries shown in the page
-var allPlants = []; // global array to hold all plant entries
-var displayedPlants = [16]; // global array to hold currently displayed plant entries (for filtering, searching, etc)
+// allPlants: hold all plant entries
+var allPlants = []; 
+// tilePlants: hold plants that are on the island
+var tilePlants = []; 
+updateEntriesInPage(); // function to load existing entries when page loads; adds all entries into allPlants
 
-updateEntriesInPage(); // call function to load existing entries when page loads
+const islandPlatform = document.getElementById("island-platform");
+island.innerHTML = ""; // Clear any existing tiles
 
-const tiles = document.getElementsByClassName("tile"); // static frontend array containing all elements that are tiles (16)
-
-// TODO: these are the tiles that also hold the plants; we need to link them together.
-for (let i = 0; i < tiles.length; i++) { // go through 16 tiles
-    const tileID = tiles[i].id; // get tile id
-    const correspondingPlant = allPlants.filter(plant => plant.tileID === tileID); // get plant corresponding to this tile; therefore you can link it to the frontend
-    if (correspondingPlant.length > 0) { // if there is a plant for this tile
-        // set up the tile with the plant info
-        displayedPlants[i] = correspondingPlant[0]; // add to displayedPlants array
+// place allPlant entries and place them in the tileArray and tilePlants if applicable
+for (plant of allPlants) { 
+    var space = plant.tileID; // get tileID of plant
+    if (space < 0 || space >= nSlots * nSlots) { // check if space is valid; otherwise add it into the tileArray and the tilePlants
+        continue; // skip invalid tileIDs
     }
-    tiles[i].addEventListener("click", () => {
-        openPlant(tileID);
-    });
+    var row = Math.floor(space / nSlots); // calculate row
+    var col = space % nSlots; // calculate col
+    tileArray[row][col].plant = plant; // place plant in tileArray
+    tilePlants.push(plant); // add plant to tilePlants array
 }
 
+// get the plant that corresponds to the tile (console log)
 function openPlant(tileID) {
     const plant = displayedPlants[tileID]; // get plant corresponding to this tile
     if (!plant) {
@@ -114,19 +124,29 @@ function openPlant(tileID) {
     }
 }
 
+// handle submitting the plant form
 async function plantSubmit(e) {
     e.preventDefault(); // revent page from reloading
+
+    // safety mechanisms
+    var tileID;
+    try {
+        tileID = parseInt(e.target.tileId.value);
+    } catch (error) {
+        tileID = -1; // will not be placed on island
+    }
 
     // create data entry object
     const dataEntry = {
         // e.target is the form that was submitted
-        tileID: e.target.title.value,
+        tileID: tileID,
         title: e.target.title.value,
         erased: false,
         eraseCode: e.target.eraseCode.value,
         entry: e.target.entry.value,
         // taken straight from copilot lols, takes date and turns it into date str
-        date: new Date().toISOString().split("T")[0]
+        date: new Date().toISOString().split("T")[0],
+        image: "assets/flowers/succulent.png" // placeholder image for now, will add user choosing functionality later
     }
 
     await fetch("/plants", { // send request to /plant endpoint in server.js (express server)
@@ -140,13 +160,15 @@ async function plantSubmit(e) {
     await updateEntriesInPage();
 }
 
+// function to fetch all entries from server and update the page (including the island)
 async function updateEntriesInPage() {
+
     const response = await fetch("/plants"); // send request to /plant endpoint in server.js (express server)
     allPlants = await response.json(); // get json data from response
 
     entries.innerHTML = ""; // reset 
 
-    // copilot carrying here; 
+    // entry display (at the bottom of the page)
     allPlants.forEach(plant => { // loop through each plant entry
         const entryDiv = document.createElement("div"); // create a div for each entry
         entryDiv.classList.add("entry"); // add class for styling
@@ -154,6 +176,42 @@ async function updateEntriesInPage() {
         //entries.innerHTML += entryDiv.outerHTML; // add div to entries container in page
         entries.appendChild(entryDiv); // add div to entries container in page
     });
+
+    // island display (the tiles)
+    // for now, all the items to be refreshed; later maybe adjust to tile-by-tile refresh instead 
+    for (item of tileArray) {
+        if (item.plant) {
+            // display; the styling will be done here and add event listener
+
+            // // TODO: make the tiles actually display properly on the island yes 
+            // // goal: these are NOT just the plants, they are tiles that potentially hold the plants
+            // // if statement to check if theres a plant for that space? or do a for loop that runs through the plants instead of items... okay this is so weird.
+            // const tileObj = tileArray[row][col];
+            // const tileDiv = document.createElement("div");
+            // tileDiv.className = "tile";
+            // tileDiv.dataset.row = row;
+            // tileDiv.dataset.col = col;
+            // tileDiv.innerHTML = ""; // or default content
+            // tileDiv.addEventListener("click", () => {
+            //     // Access tileObj.plant here
+            //     if (tileObj.plant) {
+            //         allPlants.forEach(plant => {
+            //         const { row, col } = plant; // assuming plant has row and col properties
+            //         tileArray[row][col].plant = plant;
+            //     });
+            //     }
+            // });
+            // island.appendChild(tileDiv);
+
+            item.addEventListener("click", () => {
+                openPlant(item.plant);
+            });
+        } else {
+            // empty tile; display empty tile
+            item.innerHTML = ""; // clear tile
+
+        }
+    }
 
     console.log("fetched entries:", allPlants);
      

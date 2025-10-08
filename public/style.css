@@ -97,7 +97,7 @@ nav {
 }
 
 /* Island styles */
-#island {
+/* #island {
     width: 400px;
     height: 400px;
     display: grid;
@@ -107,7 +107,7 @@ nav {
     border-style: solid;
     border-width: 3px;
     border-color: rgb(0, 0, 0);
-}
+} */
 .tile {
     border: 1px solid black;
     width: 100px;
