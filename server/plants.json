@@ -27,30 +27,12 @@
     "image": "assets/flowers/blue_flower.png"
   },
   {
-    "tileID": 16,
-    "title": "",
+    "tileID": 5,
+    "title": "please dont tell me it was js a capitalization",
     "erased": false,
     "eraseCode": "",
-    "entry": "",
-    "date": "",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 7,
-    "title": "",
-    "erased": true,
-    "eraseCode": "",
-    "entry": "",
-    "date": "",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 7,
-    "title": "",
-    "erased": false,
-    "eraseCode": "",
-    "entry": "",
-    "date": "",
+    "entry": "i did tileId instead of tileID",
+    "date": "2025-10-08",
     "image": "assets/flowers/succulent.png"
   }
 ]

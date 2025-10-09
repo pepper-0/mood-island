@@ -50,6 +50,7 @@ function toggleToolkit() {
         weedingForm.style.display = "none";
         wateringForm.style.display = "none";
         featureMode = 0; // reset feature mode when closing toolkit, safety feature
+        document.body.style.cursor = "default";
     }
 }
 var featureMode = 0; // 0 = clear, 1 = plant, 2 = shovel, 3 = water
@@ -63,6 +64,7 @@ function openFeature() {
         plantForm.style.display = "block";
         weedingForm.style.display = "none";
         wateringForm.style.display = "none";
+        document.body.style.cursor = ""
         console.log("entered plant mode");
     } else if (this.id === "toolkit-shovel") {
         featureMode = 0;
@@ -80,7 +82,7 @@ function openFeature() {
 }
 
 /* ISLAND */
-var nSlots = 4; // slots for 2D array
+var nSlots = 5; // slots for 2D array
 var island = document.getElementById("island"); // the island div
 // tileArray: the container array (gh copilot)
 let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d global array; holds all tiles (NOT just plants, some may be EMPTY)
@@ -88,6 +90,9 @@ let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d 
         plant: null // it will hold a plant object
     }))
 );
+
+/* INFORMATION BOX */
+var infoContent = document.getElementById("info-content");
 
 /* PLANT SUBMISSION SETUP */
 document.getElementById("plant-form").addEventListener("submit", plantSubmit); // to submit your plant diary entry
@@ -125,6 +130,7 @@ function openPlant(tileID) {
         return;
     } else {
         console.log(`Title: ${plant.title}\nEntry: ${plant.entry}\nDate: ${plant.date}`);
+        infoContent.innerHTML = `<h3>${plant.title}</h3><p>${plant.entry}</p><small>${plant.date}</small>`;
     }
 }
 
@@ -135,7 +141,7 @@ async function plantSubmit(e) {
     // safety mechanisms
     var tileID;
     try {
-        tileID = parseInt(e.target.tileId.value);
+        tileID = parseInt(e.target.tileID.value);
     } catch (error) {
         tileID = -1; // will not be placed on island
     }
@@ -171,6 +177,7 @@ async function updateEntriesInPage() {
     allPlants = await response.json(); // get json data from response
 
     entries.innerHTML = ""; // reset 
+    tilePlants = []; // reset tilePlants array
 
     // entry display (at the bottom of the page)
     allPlants.forEach(plant => { // loop through each plant entry
@@ -207,14 +214,14 @@ async function updateEntriesInPage() {
             island.appendChild(item);
 
             item.addEventListener("click", () => {
-                openPlant(item.plant);
+                openPlant(item.plant.tileID);
             });
 
             // also add to tilePlants
             // NOTE: may have some overlap with erase updates, keep and eye on this
-            if (!tilePlants.includes(plant)) {
+            //if (!tilePlants.includes(plant)) {
                 tilePlants.push(plant);
-            }
+            //}
 
         } else {
             // empty tile; display empty tile
