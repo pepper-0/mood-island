@@ -25,6 +25,9 @@ body {
     padding: 20px;
 }
 
+h1 {
+    font-family: 'standard', 'truetype';
+}
 
 /* Nav/Sidebar styles */
 .sidebar {
@@ -111,6 +114,9 @@ nav {
 }
 
 /* Toolkit features */
+#weeding-form {
+    display: none;
+}
 
 /* Play area styles */
 #play-area {

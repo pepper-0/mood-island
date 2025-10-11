@@ -33,7 +33,7 @@ var weedingForm = document.getElementById("weeding");
 var wateringForm = document.getElementById("watering");
 
 toolkitButton.addEventListener("click", toggleToolkit);
-function toggleToolkit() {
+function toggleToolkit() { // handle opening/closing toolkit 
     console.log("toolkit button clicked");
     var toolkitContent = document.getElementById("toolkit-content");
 
@@ -55,25 +55,28 @@ function toggleToolkit() {
 }
 var featureMode = 0; // 0 = clear, 1 = plant, 2 = shovel, 3 = water
 const toolkitOptions = document.getElementsByClassName("toolkit-option");
+
 for (let option of toolkitOptions) {
     option.addEventListener("click", openFeature);
 }
+
 function openFeature() {
     if (this.id === "toolkit-plant") {
         featureMode = 1;
         plantForm.style.display = "block";
         weedingForm.style.display = "none";
         wateringForm.style.display = "none";
-        document.body.style.cursor = ""
+        document.body.style.cursor = "";
         console.log("entered plant mode");
     } else if (this.id === "toolkit-shovel") {
-        featureMode = 0;
+        featureMode = 2;
         plantForm.style.display = "none";
         weedingForm.style.display = "block";
         wateringForm.style.display = "none";
-        console.log("entered delete mode");
+        console.log("entered weed mode");
+        handleWeed();
     } else if (this.id === "toolkit-water") {
-        featureMode = 0;
+        featureMode = 3;
         plantForm.style.display = "none";
         weedingForm.style.display = "none";
         wateringForm.style.display = "block";
@@ -136,12 +139,21 @@ function openPlant(tileID) {
 
 // handle submitting the plant form
 async function plantSubmit(e) {
-    e.preventDefault(); // revent page from reloading
+    e.preventDefault(); // prevent page from reloading
 
-    // safety mechanisms
-    var tileID;
+    /* START CODE HERE: functionality for clicking a tile to add to */
+    // plantForm has a new div that asks where you'd like to select tile to: maybe make some visual styling that indicates this also
+    const item = document.createElement("div");
+    const txt = document.createElement("p");
+    txt.innerHTML = "Click on an empty tile slot to plant your entry there!";
+    item.appendChild(txt);
+    // consider that this may have to be removed later
+    plantForm.appendChild(item);
+    // cool functionality to consider later: hovered slot that shows if the thing is occupied or not. i don't wanna have to do that rn tho lol
+
+    // you click on a plant. this should also have verifying code that ensures we are in the right feature mode    
     try {
-        tileID = parseInt(e.target.tileID.value);
+        var tileID = await selectTile(); // okay i dunno what im doing physics is way too loud for this bro </3
     } catch (error) {
         tileID = -1; // will not be placed on island
     }
@@ -167,10 +179,70 @@ async function plantSubmit(e) {
         body: JSON.stringify(dataEntry) // convert dataEntry to JSON str
     });
 
+    txt.innerHTML = "";
+
     await updateEntriesInPage();
 }
 
+/* HANDLE WEEDING */
+
+/*
+<div id = "weeding" class = "tool-content">
+    <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
+    <form id = "weeding-form">
+        <p>please enter the erase code</p>
+        <textarea placeholder="entry" id="confirm-erase"></textarea>
+        <br/>
+        <button type="submit">yes, i want to erase!</button>
+    </form>
+</div>
+*/
+
+var weedingForm = document.getElementById("weeding-form");
+var confirmErase = document.getElementById("confirm-erase");
+weedingForm.addEventListener("submit", weedSubmit); // submit the erase code
+
+// stay in this function until you switch out and no longer want to remove a tile
+// note: add safety feature that allows you to cancel the process whenever you'd like
+async function handleWeed() {
+    while (featureMode === 2) {
+        var plantRemove = await selectTile(); // choose which tile to erase
+        weedingForm.style.display = "block";
+
+        var enteredEraseCode = await weedSubmit();
+        // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
+    }
+}
+
+async function weedSubmit() {
+    
+}
+
+/* TOOLKIT HELPER FUNCTIONS */
+
+// gh copilot; idk how to use promise
+function selectTile() {
+    return new Promise(resolve => {
+        function onTileClick(e) {
+            const tileID = parseInt(e.currentTarget.id);
+            // Remove this temporary listener from all tiles
+            for (let tile of document.getElementsByClassName("tile")) {
+                tile.removeEventListener("click", onTileClick);
+                // Optionally, restore the original handler here if needed
+            }
+            resolve(tileID);
+        }
+        // Add temporary listeners to all tiles
+        for (let tile of document.getElementsByClassName("tile")) {
+            tile.addEventListener("click", onTileClick);
+        }
+    });
+}
+
+/* PAGE LOADING*/
+
 // function to fetch all entries from server and update the page (including the island)
+// also the fact that this doesn't lag out like cRAZY is an absolute miracle lol.
 async function updateEntriesInPage() {
 
     const response = await fetch("/plants"); // send request to /plant endpoint in server.js (express server)
@@ -214,14 +286,13 @@ async function updateEntriesInPage() {
             island.appendChild(item);
 
             item.addEventListener("click", () => {
-                openPlant(item.plant.tileID);
+                if (featureMode === 0) // safety mechanism that ensures that ONLY when you are in a select mode, can you view (0 = default)
+                    openPlant(item.plant.tileID);
             });
 
             // also add to tilePlants
             // NOTE: may have some overlap with erase updates, keep and eye on this
-            //if (!tilePlants.includes(plant)) {
-                tilePlants.push(plant);
-            //}
+            tilePlants.push(plant);
 
         } else {
             // empty tile; display empty tile

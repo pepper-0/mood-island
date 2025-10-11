@@ -36,20 +36,21 @@
                 <h2>your current mode</h2>
                 <form id="plant-form" class = "tool-content"> <!--taken from express; diary entry form-->
                     <p>click below to add a plant (diary) entry</p>
-                    <input id="tileID" name="tileID" placeholder="where will you plant it?" maxlength="50">
+                    <input id="title" name="title" placeholder="title" maxlength="100">
                     <br/>
-                    <input id="title" name="title" placeholder="title" maxlength="50">
-                    <br/>
-                    <input id="eraseCode" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
+                    <input id="erase-code" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
                     <br/>
                     <textarea placeholder="entry" id="entry"></textarea>
                     <br/>
-                    <button type="submit">submit</button>
+                    <button type="submit">plant entry!</button>
                 </form>
                 <div id = "weeding" class = "tool-content">
-                    <p>you can weed out (remove) diary entries here</p>
-                    <form id = "weeding-form"> 
-
+                    <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
+                    <form id = "weeding-form">
+                        <p>please enter the erase code</p>
+                        <textarea placeholder="erase code" id="confirm-erase"></textarea>
+                        <br/>
+                        <button type="submit">yes, i want to erase!</button>
                     </form>
                 </div>
                 <div id = "watering" class="tool-content" >

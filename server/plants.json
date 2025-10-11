@@ -34,5 +34,23 @@
     "entry": "i did tileId instead of tileID",
     "date": "2025-10-08",
     "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 12,
+    "title": "hi this is a test",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "i'm in ap csp rn !! :D ",
+    "date": "2025-10-09",
+    "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 17,
+    "title": "Hanging out with Jana",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "Had a fun time hangout with Jana after school downtown.",
+    "date": "2025-10-10",
+    "image": "assets/flowers/succulent.png"
   }
 ]
