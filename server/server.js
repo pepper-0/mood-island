@@ -31,7 +31,26 @@ app.get("/plants", async (req, res) => { // set up route for get requests to /pl
     
 });
 
-// taken from hack club Express server example 
+// DELETE
+app.delete("/plants/:tileID", async (req, res) => { // taken frm geeksforgeeks cause this is so confusing </3. set up route for delete reqs to /plants endpt
+    try { // i am so not built for backend what am i doing ??
+    const data = await loadEntries(); // obtain data first
+    const deleteID = parseInt(req.params.tileID); // find tile id of the thing u wanna delete
+    const plantIndex = data.findIndex(p => p.tileID === deleteID && !p.erased); // finding the item based on tileID 
+
+    if (plantIndex === -1) return res.status(404).send('Item not found'); // not  sure if correct for here; look at it again later
+    data.splice(plantIndex, 1); // remove item from array
+    // now turn the array into a JSON again and write into the JSON file.
+    await fs.writeFile("plants.json", JSON.stringify(data, null, 2));
+
+    } catch {
+        // poopy poopy
+        res.status(500).send("deletion server error yippee i guess");
+    }
+    
+});
+
+// taken from hack club Express server example. parses JSON str into array
 function loadEntries() {
     console.log("loading entries from plants.json");
     return new Promise((resolve, reject) => {

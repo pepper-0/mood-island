@@ -52,5 +52,23 @@
     "entry": "Had a fun time hangout with Jana after school downtown.",
     "date": "2025-10-10",
     "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 25,
+    "title": "making sure this works lol",
+    "erased": false,
+    "eraseCode": "code",
+    "entry": "testing this and also seeing if my weed progress work is good or nah",
+    "date": "2025-10-11",
+    "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 21,
+    "title": "testing",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "wait does it properly even like do the thing where it doesnt refresh the whole page?? ",
+    "date": "2025-10-11",
+    "image": "assets/flowers/succulent.png"
   }
 ]

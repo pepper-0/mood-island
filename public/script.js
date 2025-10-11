@@ -29,7 +29,7 @@ function toggleSidebar() {
     // Toolkit
 var toolkitButton = document.getElementById("toolkit-button");
 var plantForm = document.getElementById("plant-form");
-var weedingForm = document.getElementById("weeding");
+var weedingBlock = document.getElementById("weeding");
 var wateringForm = document.getElementById("watering");
 
 toolkitButton.addEventListener("click", toggleToolkit);
@@ -64,21 +64,21 @@ function openFeature() {
     if (this.id === "toolkit-plant") {
         featureMode = 1;
         plantForm.style.display = "block";
-        weedingForm.style.display = "none";
+        weedingBlock.style.display = "none";
         wateringForm.style.display = "none";
         document.body.style.cursor = "";
         console.log("entered plant mode");
     } else if (this.id === "toolkit-shovel") {
         featureMode = 2;
         plantForm.style.display = "none";
-        weedingForm.style.display = "block";
+        weedingBlock.style.display = "block";
         wateringForm.style.display = "none";
         console.log("entered weed mode");
         handleWeed();
     } else if (this.id === "toolkit-water") {
         featureMode = 3;
         plantForm.style.display = "none";
-        weedingForm.style.display = "none";
+        weedingBlock.style.display = "none";
         wateringForm.style.display = "block";
         console.log("entered edit mode");
     }
@@ -186,36 +186,29 @@ async function plantSubmit(e) {
 
 /* HANDLE WEEDING */
 
-/*
-<div id = "weeding" class = "tool-content">
-    <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
-    <form id = "weeding-form">
-        <p>please enter the erase code</p>
-        <textarea placeholder="entry" id="confirm-erase"></textarea>
-        <br/>
-        <button type="submit">yes, i want to erase!</button>
-    </form>
-</div>
-*/
-
 var weedingForm = document.getElementById("weeding-form");
 var confirmErase = document.getElementById("confirm-erase");
 weedingForm.addEventListener("submit", weedSubmit); // submit the erase code
-
+var selectedPlant;
 // stay in this function until you switch out and no longer want to remove a tile
 // note: add safety feature that allows you to cancel the process whenever you'd like
 async function handleWeed() {
     while (featureMode === 2) {
-        var plantRemove = await selectTile(); // choose which tile to erase
+        console.log("yep entered weed mode");
+        var removeID = await selectTile(); // choose which tile to erase
+        console.log("selected tile %i", removeID);
+        try {
+            selectedPlant = allPlants.find(p => p.tileID === removeID && !p.erased);
+            console.log("whoa it worked!! somehow.");
+        } catch {
+            console.log("umm catching an error lols");
+        }
+        
         weedingForm.style.display = "block";
+        console.log("shouldve shown the weed form by now");
 
-        var enteredEraseCode = await weedSubmit();
-        // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
+        // rest of plant handling proceeds in weedSubmit (when you submit hte erase code)
     }
-}
-
-async function weedSubmit() {
-    
 }
 
 /* TOOLKIT HELPER FUNCTIONS */
@@ -237,6 +230,35 @@ function selectTile() {
             tile.addEventListener("click", onTileClick);
         }
     });
+}
+
+// handle when submission occurs for weed
+async function weedSubmit(e) {
+    e.preventDefault();
+
+    var enteredEraseCode;
+    try { // parse getting the submission erase code from weedSubmit
+        enteredEraseCode = e.target.eraseCode.value;
+    } catch {
+        enteredEraseCode = "";
+    }
+    console.log("so we shouldve obtained the erase code ??");
+    // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
+    console.log("selectedPlant.eraseCode: ", selectedPlant.eraseCode);
+    console.log("enteredEraseCode: ", enteredEraseCode);
+    if (selectedPlant.eraseCode === enteredEraseCode) {
+        console.log("by some miracle, this worked! and i am trying to delete plant id",selectedPlant.tileID);
+
+        await fetch(`/plants/${selectedPlant.tileID}`, { // send request to /plant endpoint in server.js (express server)
+            method: "DELETE" // this is a delete request
+            // headers: {
+            //     "Content-Type": "application/json" // sending json data
+            // },
+            // body: JSON.stringify(dataEntry) // convert dataEntry to JSON str
+        });
+    }
+
+    updateEntriesInPage();
 }
 
 /* PAGE LOADING*/
