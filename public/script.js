@@ -31,8 +31,8 @@ var toolkitButton = document.getElementById("toolkit-button");
 var plantForm = document.getElementById("plant-form");
 var weedingBlock = document.getElementById("weeding");
 var wateringForm = document.getElementById("watering");
-
 toolkitButton.addEventListener("click", toggleToolkit);
+
 function toggleToolkit() { // handle opening/closing toolkit 
     console.log("toolkit button clicked");
     var toolkitContent = document.getElementById("toolkit-content");
@@ -47,20 +47,21 @@ function toggleToolkit() { // handle opening/closing toolkit
         toolkitButton.style.transform = "rotate(0deg)"; // un-rotate button when clicked
         toolkitContent.style.display = "none";
         plantForm.style.display = "none"; // hide all forms when closing toolkit
-        weedingForm.style.display = "none";
+        weedingBlock.style.display = "none";
         wateringForm.style.display = "none";
         featureMode = 0; // reset feature mode when closing toolkit, safety feature
         document.body.style.cursor = "default";
     }
 }
+
 var featureMode = 0; // 0 = clear, 1 = plant, 2 = shovel, 3 = water
 const toolkitOptions = document.getElementsByClassName("toolkit-option");
 
-for (let option of toolkitOptions) {
+for (let option of toolkitOptions) { // eventlisteners for toolkit features
     option.addEventListener("click", openFeature);
 }
 
-function openFeature() {
+function openFeature() { // open up a toolbox feature 
     if (this.id === "toolkit-plant") {
         featureMode = 1;
         plantForm.style.display = "block";
@@ -98,16 +99,15 @@ let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d 
 var infoContent = document.getElementById("info-content");
 
 /* PLANT SUBMISSION SETUP */
-document.getElementById("plant-form").addEventListener("submit", plantSubmit); // to submit your plant diary entry
-
+var plantForm = document.getElementById("plant-form"); // the form itself
+plantForm.addEventListener("submit", plantSubmit); // to submit your plant diary entry
+var plantConfirmation = document.getElementById("plant-confirmation"); // confirmation message
 var entries = document.getElementById("entries"); // to update the entries shown in the page
-// allPlants: hold all plant entries
-var allPlants = []; 
-// tilePlants: hold plants that are on the island
-var tilePlants = []; 
+var allPlants = []; // holds all plalnt entries
+var tilePlants = []; // holds all plants on island
 updateEntriesInPage(); // function to load existing entries when page loads; adds all entries into allPlants
 
-const islandPlatform = document.getElementById("island-platform");
+const islandPlatform = document.getElementById("island-platform"); // island itself
 island.innerHTML = ""; // Clear any existing tiles
 
 // place allPlant entries and place them in the tileArray and tilePlants if applicable
@@ -122,10 +122,8 @@ for (plant of allPlants) {
     tilePlants.push(plant); // add plant to tilePlants array
 }
 
-/* PLANT SUBMISSION FUNCTIONS */
-
-// get the plant that corresponds to the tile (console log)
-function openPlant(tileID) {
+/* HANDLE WATERING/PLANTING */
+function openPlant(tileID) { // get the plant that corresponds to the tile (console log)
     console.log("tileID:", tileID);
     const plant = tilePlants.find(p => p.tileID === tileID && !p.erased); // get plant corresponding to this tile
     if (plant == null) {
@@ -137,9 +135,9 @@ function openPlant(tileID) {
     }
 }
 
-// handle submitting the plant form
-async function plantSubmit(e) {
+async function plantSubmit(e) { // handle submitting the plant form
     e.preventDefault(); // prevent page from reloading
+    plantConfirmation.innerHTML = "";
 
     /* START CODE HERE: functionality for clicking a tile to add to */
     // plantForm has a new div that asks where you'd like to select tile to: maybe make some visual styling that indicates this also
@@ -182,34 +180,130 @@ async function plantSubmit(e) {
     txt.innerHTML = "";
 
     await updateEntriesInPage();
+
+    plantForm.reset();
+
+    plantConfirmation.innerHTML = "planting successful!";
 }
 
-/* HANDLE WEEDING */
-
+/* HANDLE WEEDING/DELETING */
+var cancelErase = document.getElementById("cancel-erase");
+cancelErase.addEventListener("click", resetWeedForm);
+var eraseConfirmation = document.getElementById("erase-confirmation");
 var weedingForm = document.getElementById("weeding-form");
 var confirmErase = document.getElementById("confirm-erase");
-weedingForm.addEventListener("submit", weedSubmit); // submit the erase code
 var selectedPlant;
 // stay in this function until you switch out and no longer want to remove a tile
-// note: add safety feature that allows you to cancel the process whenever you'd like
 async function handleWeed() {
-    while (featureMode === 2) {
-        var removeID = await selectTile(); // choose which tile to erase
-        try {
-            selectedPlant = allPlants.find(p => p.tileID === removeID && !p.erased);
-        } catch {
-            console.log("umm catching an error lols");
-        }
-        weedingForm.style.display = "block";
+    var removeID = await selectTile(); // choose which tile to erase
+    cancelErase.style.display = "block";
+    try {
+        selectedPlant = allPlants.find(p => p.tileID === removeID && !p.erased);
+    } catch {
+        console.log("umm catching an error lols");
+    }
+    weedingForm.style.display = "block";
+    // rest of plant handling proceeds in weedSubmit (when you submit hte erase code)
+    
+    var enteredEraseCode = await weedSubmit();
 
-        // rest of plant handling proceeds in weedSubmit (when you submit hte erase code)
+    // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
+    if (selectedPlant.eraseCode === enteredEraseCode) {
+        await fetch(`/plants/${selectedPlant.tileID}`, { // send request to /plant endpoint in server.js (express server)
+            method: "DELETE", // this is a delete request
+            headers: {
+                "Content-Type": "application/json" // sending json data
+            }
+        });
+        updateEntriesInPage();
+        resetWeedForm(1);
+    } else {
+        resetWeedForm(2);
     }
 }
 
-/* TOOLKIT HELPER FUNCTIONS */
+function resetWeedForm(code) { // 0 = neutral, 1 = success, 2 = failure
+    // refresh so that form is cleared and not appearing
+    weedingForm.style.display = "none";
+    weedingForm.reset();
+    cancelErase.style.display = "none";
 
-// gh copilot; idk how to use promise
-function selectTile() {
+    // show results for previous actions
+    if (code === null || 0) {
+        eraseConfirmation.innerHTML = "";
+    } else if (code === 1) {
+        eraseConfirmation.innerHTML = "entry has been erased! click on another plant to weed.";
+    } else if (code === 2) {
+        eraseConfirmation.innerHTML = "your erase code is incorrect. please try again.";
+    }
+    
+    setTimeout(() => {
+        handleWeed();
+    }, 1000); // pause ui before calling handleweed
+}
+
+// handle when submission occurs for weed
+function weedSubmit(e) {
+    return new Promise(resolve =>  {
+        function onSubmit(e) {
+            e.preventDefault();
+            weedingForm.removeEventListener("submit", onSubmit);
+            var enteredEraseCode;
+            try { // parse getting the submission erase code from weedSubmit
+                enteredEraseCode = e.target.enteredEraseCode.value;
+            } catch {
+                enteredEraseCode = "";
+            }
+
+            resolve(enteredEraseCode);
+        }
+        weedingForm.addEventListener("submit", onSubmit); // submit the erase code
+    });
+}
+
+/* HANDLE UPDATING */
+var cancelWater = document.getElementById("cancel-water");
+var wateringForm = document.getElementBuId("watering-form");
+cancelWater.addEventListener("click", resetWaterForm);
+
+async function handleWater() {
+    var removeID = await selectTile(); // choose which tile to erase
+    cancelErase.style.display = "block";
+    try {
+        selectedPlant = allPlants.find(p => p.tileID === removeID && !p.erased);
+    } catch {
+        console.log("umm catching an error lols");
+    }
+    weedingForm.style.display = "block";
+    // rest of plant handling proceeds in weedSubmit (when you submit hte erase code)
+    
+    var enteredEraseCode = await weedSubmit();
+}
+
+function waterSubmit(e) {
+    return new Promise(resolve =>  {
+        function onSubmit(e) {
+            e.preventDefault();
+            wateringForm.removeEventListener("submit", onSubmit);
+            var enteredPass;
+            try { // parse getting the submission erase code from weedSubmit
+                enteredEraseCode = e.target.enteredEraseCode.value;
+            } catch {
+                enteredEraseCode = "";
+            }
+
+            resolve(enteredEraseCode);
+        }
+        weedingForm.addEventListener("submit", onSubmit); // submit the erase code
+    });
+}
+
+function resetWaterForm() {
+    
+}
+
+/* TOOLKIT HELPER FUNCTIONS */
+function selectTile() { // gh copilot; idk how to use promise
     return new Promise(resolve => {
         function onTileClick(e) {
             const tileID = parseInt(e.currentTarget.id);
@@ -227,40 +321,7 @@ function selectTile() {
     });
 }
 
-// handle when submission occurs for weed
-async function weedSubmit(e) {
-    e.preventDefault();
-
-    var enteredEraseCode;
-    try { // parse getting the submission erase code from weedSubmit
-        enteredEraseCode = e.target.enteredEraseCode.value;
-    } catch {
-        enteredEraseCode = "";
-    }
-    // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
-    console.log("selectedPlant.eraseCode: ", selectedPlant.eraseCode);
-    console.log("enteredEraseCode: ", enteredEraseCode);
-    if (selectedPlant.eraseCode === enteredEraseCode) {
-        console.log("sending over", selectedPlant.tileID);
-        await fetch(`/plants/${selectedPlant.tileID}`, { // send request to /plant endpoint in server.js (express server)
-            method: "DELETE", // this is a delete request
-            headers: {
-                "Content-Type": "application/json" // sending json data
-            }
-        });
-        // await fetch("/plants", {
-        //     method: "DELETE"
-        // });
-        console.log("sent over");
-    }
-
-    updateEntriesInPage();
-}
-
-/* PAGE LOADING*/
-
 // function to fetch all entries from server and update the page (including the island)
-// also the fact that this doesn't lag out like cRAZY is an absolute miracle lol.
 async function updateEntriesInPage() {
 
     const response = await fetch("/plants"); // send request to /plant endpoint in server.js (express server)
@@ -304,8 +365,7 @@ async function updateEntriesInPage() {
             island.appendChild(item);
 
             item.addEventListener("click", () => {
-                if (featureMode === 0) // safety mechanism that ensures that ONLY when you are in a select mode, can you view (0 = default)
-                    openPlant(item.plant.tileID);
+                openPlant(item.plant.tileID);
             });
 
             // also add to tilePlants

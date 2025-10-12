@@ -43,21 +43,31 @@
                     <textarea placeholder="entry" id="entry"></textarea>
                     <br/>
                     <button type="submit">plant entry!</button>
+                    <p id = plant-confirmation></p>
                 </form>
                 <div id = "weeding" class = "tool-content">
                     <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
+                    <button id = "cancel-erase">nevermind, cancel</button>
+
                     <form id = "weeding-form">
-                        <p>please enter the erase code</p>
-                        <textarea placeholder="erase code" name = enteredEraseCode id="confirm-erase"></textarea>
+                        <p>please enter the passcode</p>
+                        <textarea placeholder="passcode" name = enteredEraseCode id="confirm-erase"></textarea>
                         <br/>
                         <button type="submit">yes, i want to erase!</button>
                     </form>
+                    <p id = erase-confirmation></p>
                 </div>
                 <div id = "watering" class="tool-content" >
                     <p>you can water (update) diary entries here</p>
+                    <button id = "cancel-water">nevermind, cancel</button>
                     <form id = "watering-form"> 
-
+                        <p>please enter passcode</p>
+                        <textarea placeholder="passcode" name = enteredPassCode id="confirm-water"></textarea>
+                        <br/>
+                        <button type="submit">yes, i want to erase!</button>
+                        <p id = erase-confirmation></p>
                     </form>
+                    
                 </div>
             </div>
 

@@ -18,33 +18,6 @@
     "image": "assets/flowers/pink_flower.png"
   },
   {
-    "tileID": 3,
-    "title": "just added an erase code",
-    "erased": false,
-    "eraseCode": "test",
-    "entry": "ok, let's see if this works! haven't made the deletion implementation though.",
-    "date": "2025-10-06",
-    "image": "assets/flowers/blue_flower.png"
-  },
-  {
-    "tileID": 5,
-    "title": "please dont tell me it was js a capitalization",
-    "erased": false,
-    "eraseCode": "",
-    "entry": "i did tileId instead of tileID",
-    "date": "2025-10-08",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 12,
-    "title": "hi this is a test",
-    "erased": false,
-    "eraseCode": "",
-    "entry": "i'm in ap csp rn !! :D ",
-    "date": "2025-10-09",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
     "tileID": 17,
     "title": "Hanging out with Jana",
     "erased": false,
@@ -60,24 +33,6 @@
     "eraseCode": "code",
     "entry": "testing this and also seeing if my weed progress work is good or nah",
     "date": "2025-10-11",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 22,
-    "title": "i am so confused",
-    "erased": false,
-    "eraseCode": "1",
-    "entry": "ts not working fr",
-    "date": "2025-10-11",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 14,
-    "title": "hello i am debugging",
-    "erased": false,
-    "eraseCode": "mama",
-    "entry": "hello.\n\ni am strugglging. \n\nit is 10:23 pm\nand i do not understnd why my CODE IS NOT WORKIGN?!??!??@!!?!!!!!!\n\nplease help\nsomeone\nsend help",
-    "date": "2025-10-12",
     "image": "assets/flowers/succulent.png"
   }
 ]

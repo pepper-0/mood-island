@@ -39,29 +39,20 @@ app.get("/plants", async (req, res) => { // set up route for get requests to /pl
 });
 
 // DELETE
-// app.delete("/plants", (req, res) => {
-//     console.log("debug works");
-//     res.status(200).send("completed");
-// });
+
 app.delete("/plants/:tileID", async (req, res) => { // taken frm geeksforgeeks cause this is so confusing </3. set up route for delete reqs to /plants endpt
-    console.log("gang did i even enter ehre lol");
     try { // i am so not built for backend what am i doing ??
         const data = await loadEntries(); // obtain data first
-        console.log("1 loaded entries");
         const deleteID = parseInt(req.params.tileID); // find tile id of the thing u wanna delete
-        console.log("2 loaded and looking for tileID:", deleteID);
         
         const plantIndex = data.findIndex(p => p.tileID === deleteID && !p.erased); // finding the item based on tileID 
-        console.log("3 obtained plantIndex, which is at", plantIndex);
         if (plantIndex === -1) return res.status(404).send('Item not found'); // not  sure if correct for here; look at it again later
         data.splice(plantIndex, 1); // remove item from array
-        console.log("4 spliced");
         // now turn the array into a JSON again and write into the JSON file.
         await fsp.writeFile(filePath, JSON.stringify(data, null, 2));
         res.status(200).send("plant successfully deleted");
     } catch (err) {
         // poopy poopy
-        console.error("delete error yippee (not:", err);
         res.status(500).send("deletion server error yippee i guess");
     }
     
