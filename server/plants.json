@@ -63,12 +63,21 @@
     "image": "assets/flowers/succulent.png"
   },
   {
-    "tileID": 21,
-    "title": "testing",
+    "tileID": 22,
+    "title": "i am so confused",
     "erased": false,
-    "eraseCode": "",
-    "entry": "wait does it properly even like do the thing where it doesnt refresh the whole page?? ",
+    "eraseCode": "1",
+    "entry": "ts not working fr",
     "date": "2025-10-11",
+    "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 14,
+    "title": "hello i am debugging",
+    "erased": false,
+    "eraseCode": "mama",
+    "entry": "hello.\n\ni am strugglging. \n\nit is 10:23 pm\nand i do not understnd why my CODE IS NOT WORKIGN?!??!??@!!?!!!!!!\n\nplease help\nsomeone\nsend help",
+    "date": "2025-10-12",
     "image": "assets/flowers/succulent.png"
   }
 ]

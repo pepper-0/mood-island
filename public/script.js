@@ -194,18 +194,13 @@ var selectedPlant;
 // note: add safety feature that allows you to cancel the process whenever you'd like
 async function handleWeed() {
     while (featureMode === 2) {
-        console.log("yep entered weed mode");
         var removeID = await selectTile(); // choose which tile to erase
-        console.log("selected tile %i", removeID);
         try {
             selectedPlant = allPlants.find(p => p.tileID === removeID && !p.erased);
-            console.log("whoa it worked!! somehow.");
         } catch {
             console.log("umm catching an error lols");
         }
-        
         weedingForm.style.display = "block";
-        console.log("shouldve shown the weed form by now");
 
         // rest of plant handling proceeds in weedSubmit (when you submit hte erase code)
     }
@@ -238,24 +233,25 @@ async function weedSubmit(e) {
 
     var enteredEraseCode;
     try { // parse getting the submission erase code from weedSubmit
-        enteredEraseCode = e.target.eraseCode.value;
+        enteredEraseCode = e.target.enteredEraseCode.value;
     } catch {
         enteredEraseCode = "";
     }
-    console.log("so we shouldve obtained the erase code ??");
     // verify if erase code of plantRemove === entered erase code; if so, remove. try to do it with update entries in page (urgh)
     console.log("selectedPlant.eraseCode: ", selectedPlant.eraseCode);
     console.log("enteredEraseCode: ", enteredEraseCode);
     if (selectedPlant.eraseCode === enteredEraseCode) {
-        console.log("by some miracle, this worked! and i am trying to delete plant id",selectedPlant.tileID);
-
+        console.log("sending over", selectedPlant.tileID);
         await fetch(`/plants/${selectedPlant.tileID}`, { // send request to /plant endpoint in server.js (express server)
-            method: "DELETE" // this is a delete request
-            // headers: {
-            //     "Content-Type": "application/json" // sending json data
-            // },
-            // body: JSON.stringify(dataEntry) // convert dataEntry to JSON str
+            method: "DELETE", // this is a delete request
+            headers: {
+                "Content-Type": "application/json" // sending json data
+            }
         });
+        // await fetch("/plants", {
+        //     method: "DELETE"
+        // });
+        console.log("sent over");
     }
 
     updateEntriesInPage();
