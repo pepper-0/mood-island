@@ -117,6 +117,15 @@ nav {
 #weeding-form {
     display: none;
 }
+#watering-form {
+    display: none;
+}
+#cancel-water {
+    display: none;
+}
+#watering-update-form {
+    display: none;
+}
 
 /* Play area styles */
 #play-area {

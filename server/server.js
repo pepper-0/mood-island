@@ -38,8 +38,20 @@ app.get("/plants", async (req, res) => { // set up route for get requests to /pl
     
 });
 
-// DELETE
+// GET (by ID)
+app.get("/plants/:tileID", async (req, res) => {
+    try {
+        const data = await loadEntries(); // obtain data first
+        const tileID = parseInt(req.params.tileID); // find tile id of the thing u wanna delete
+        const plant = data.find(p => p.tileID === tileID && !p.erased); // finding the item based on tileID 
+        res.json(plant);
+    } catch (err) {
+        // poopy poopy
+        res.status(500).send("deletion server error yippee i guess");
+    }
+});
 
+// DELETE
 app.delete("/plants/:tileID", async (req, res) => { // taken frm geeksforgeeks cause this is so confusing </3. set up route for delete reqs to /plants endpt
     try { // i am so not built for backend what am i doing ??
         const data = await loadEntries(); // obtain data first

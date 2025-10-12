@@ -38,7 +38,7 @@
                     <p>click below to add a plant (diary) entry</p>
                     <input id="title" name="title" placeholder="title" maxlength="100">
                     <br/>
-                    <input id="erase-code" name="eraseCode" placeholder="erase code (used to delete your post)" maxlength="50">
+                    <input id="erase-code" name="eraseCode" maxlength = "100" placeholder="pass code (keep safe to delete/update your entries!)">
                     <br/>
                     <textarea placeholder="entry" id="entry"></textarea>
                     <br/>
@@ -51,7 +51,7 @@
 
                     <form id = "weeding-form">
                         <p>please enter the passcode</p>
-                        <textarea placeholder="passcode" name = enteredEraseCode id="confirm-erase"></textarea>
+                        <textarea placeholder="passcode" maxlength = "100"  name = enteredEraseCode id="confirm-erase"></textarea>
                         <br/>
                         <button type="submit">yes, i want to erase!</button>
                     </form>
@@ -62,11 +62,17 @@
                     <button id = "cancel-water">nevermind, cancel</button>
                     <form id = "watering-form"> 
                         <p>please enter passcode</p>
-                        <textarea placeholder="passcode" name = enteredPassCode id="confirm-water"></textarea>
+                        <textarea placeholder="passcode" maxlength = "100" name = enteredPassCode id="confirm-water"></textarea>
                         <br/>
-                        <button type="submit">yes, i want to erase!</button>
-                        <p id = erase-confirmation></p>
+                        <button type="submit">i'm ready to update</button>
                     </form>
+                    <form id = "watering-update-form"> 
+                        <textarea id = "update-title" name = "title" maxlength = "100"></textarea>
+                        <textarea id = "update-erase-code" maxlength = "100"></textarea>
+                        <textarea id = "update-entry" name = entry ></textarea>
+                        <button type = "submit">update!</button>
+                    </form>
+                    <p id = "water-confirmation"></p>
                     
                 </div>
             </div>
