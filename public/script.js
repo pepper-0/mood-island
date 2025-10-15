@@ -69,20 +69,24 @@ function openFeature() { // open up a toolbox feature
         wateringBlock.style.display = "none";
         document.body.style.cursor = "";
         console.log("entered plant mode");
+        resetWaterForm(0);
+        resetWeedForm(0);
     } else if (this.id === "toolkit-shovel") {
         featureMode = 2;
         plantForm.style.display = "none";
         weedingBlock.style.display = "block";
         wateringBlock.style.display = "none";
         console.log("entered weed mode");
-        handleWeed();
+        handleWeed(0);
+        resetWaterForm(0);
     } else if (this.id === "toolkit-water") {
         featureMode = 3;
         plantForm.style.display = "none";
         weedingBlock.style.display = "none";
         wateringBlock.style.display = "block";
         console.log("entered edit mode");
-        handleWater();
+        handleWater(0);
+        resetWeedForm(0);
     }
 }
 
@@ -320,23 +324,41 @@ async function handleWater() {
         try { // handle obtaining the update now
             wateringUpdateForm.style.display = "block";
             console.log("obtained the following plnat, this msg indicates we have entered the function that will permit users to modify: ", plant);
-            updateTitle.innerHTML = plant.title;
-            updateEraseCode.innerHTML = plant.eraseCode;
-            updateEntry.innerHTML = plant.entry;
+            updateTitle.value = plant.title;
+            updateEraseCode.value = plant.eraseCode;
+            updateEntry.value = plant.entry;
 
-            await updatePlant(); // get the signal that it's ready (def not right but we'll let it slide for now)
+            wateringForm.style.display = "none";
 
-            // now do the thingie thingie thingie um i forget what im trying to do hold on.. 
-            // ah right, do ur get thing 
-
-            resetWaterForm(2);
+//            await updatePlant(); // get the signal that it's ready (def not right but we'll let it slide for now)
         } catch {
             resetWaterForm(3);
-        }
-        
+        }  
     } else {
         resetWaterForm(1); // passcode incorrect lols
     }
+}
+
+async function updatePlant(e) {
+    e.preventDefault();
+    
+    const dataEntry = {
+        title: e.target.updatedTitle.value,
+        eraseCode: e.target.updatedEraseCode.value,
+        entry: e.target.updatedEntry.value
+    }
+
+    await fetch(`/plants/${selectedPlant.tileID}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataEntry)
+    });
+
+    updateEntriesInPage();
+
+    resetWaterForm(2);
 }
 
 function waterSubmit(e) { // submission for correct passcode 
@@ -359,7 +381,9 @@ function waterSubmit(e) { // submission for correct passcode
 
 function resetWaterForm(code) { // 0 = neutral, 1 = erase code failure, 2 = success
     wateringForm.style.display = "none";
+    wateringUpdateForm.style.display = "none";
     wateringForm.reset();
+    wateringUpdateForm.reset();
     cancelWater.style.display = "none";
 
     if (code === null || 0) {
@@ -377,14 +401,6 @@ function resetWaterForm(code) { // 0 = neutral, 1 = erase code failure, 2 = succ
     }, 1000); // pause ui before calling handlewater again
 }
 
-async function updatePlant(e) {
-    e.preventDefault();
-    
-    await fetch(`/plants/${selectedPlant.tileID}`, {
-        method: "PATCH"
-    });
-}
-
 /* TOOLKIT HELPER FUNCTIONS */
 
 // function to fetch all entries from server and update the page (including the island)
@@ -397,13 +413,13 @@ async function updateEntriesInPage() {
     tilePlants = []; // reset tilePlants array
 
     // entry display (at the bottom of the page)
-    allPlants.forEach(plant => { // loop through each plant entry
-        const entryDiv = document.createElement("div"); // create a div for each entry
-        entryDiv.classList.add("entry"); // add class for styling
-        entryDiv.innerHTML = `<h3>${plant.title}</h3><p>${plant.entry}</p><small>${plant.date}</small>`; // add content to div
-        //entries.innerHTML += entryDiv.outerHTML; // add div to entries container in page
-        entries.appendChild(entryDiv); // add div to entries container in page
-    });
+    // allPlants.forEach(plant => { // loop through each plant entry
+    //     const entryDiv = document.createElement("div"); // create a div for each entry
+    //     entryDiv.classList.add("entry"); // add class for styling
+    //     entryDiv.innerHTML = `<h3>${plant.title}</h3><p>${plant.entry}</p><small>${plant.date}</small>`; // add content to div
+    //     //entries.innerHTML += entryDiv.outerHTML; // add div to entries container in page
+    //     entries.appendChild(entryDiv); // add div to entries container in page
+    // });
 
     // island display (the tiles). for now, all the items to be refreshed; later maybe adjust to tile-by-tile refresh instead 
     // clear island display

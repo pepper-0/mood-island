@@ -51,7 +51,7 @@
 
                     <form id = "weeding-form">
                         <p>please enter the passcode</p>
-                        <textarea placeholder="passcode" maxlength = "100"  name = enteredEraseCode id="confirm-erase"></textarea>
+                        <input placeholder="passcode" maxlength = "100"  name = enteredEraseCode id="confirm-erase"></input>
                         <br/>
                         <button type="submit">yes, i want to erase!</button>
                     </form>
@@ -59,19 +59,25 @@
                 </div>
                 <div id = "watering" class="tool-content" >
                     <p>you can water (update) diary entries here</p>
-                    <button id = "cancel-water">nevermind, cancel</button>
                     <form id = "watering-form"> 
+                        <br>
                         <p>please enter passcode</p>
-                        <textarea placeholder="passcode" maxlength = "100" name = enteredPassCode id="confirm-water"></textarea>
+                        <input placeholder="passcode" maxlength = "100" name = enteredPassCode id="confirm-water"></input>
                         <br/>
                         <button type="submit">i'm ready to update</button>
                     </form>
                     <form id = "watering-update-form"> 
-                        <textarea id = "update-title" name = "title" maxlength = "100"></textarea>
-                        <textarea id = "update-erase-code" maxlength = "100"></textarea>
-                        <textarea id = "update-entry" name = entry ></textarea>
+                        <br>
+                        <p>update your diary entry in the fields below!: </p>
+                        <input id = "update-title" name = "updatedTitle" maxlength = "100"></input>
+                        <br>
+                        <input id = "update-erase-code" maxlength = "100" name = "updatedEraseCode"></input>
+                        <br>
+                        <textarea id = "update-entry" name = "updatedEntry" ></textarea>
+                        <br>
                         <button type = "submit">update!</button>
                     </form>
+                    <button id = "cancel-water">nevermind, cancel</button>
                     <p id = "water-confirmation"></p>
                     
                 </div>
@@ -92,7 +98,7 @@
             </div>
         </div>
 
-        <h2>all diary entries</h2>
+        <!-- <h2>all diary entries</h2> -->
         <div id="entries">
             <!-- diary entries will be appended here -->
         </div>

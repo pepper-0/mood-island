@@ -20,6 +20,10 @@ body {
     display:block;
 }
 
+p {
+    font-size: 20px;
+}
+
 #main {
     transition: margin-right .5s;
     padding: 20px;
@@ -27,6 +31,22 @@ body {
 
 h1 {
     font-family: 'standard', 'truetype';
+    font-size: 40px;
+}
+
+h2, h3 {
+    font-size: 30px;
+}
+
+input, textarea {
+    padding: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-family: 'standard', 'sans-serif';
+    font-size: 26px;
+    background-color: rgb(190, 193, 194);
+    border-style: solid;
+    border-color: #7a828a;
 }
 
 /* Nav/Sidebar styles */
@@ -114,16 +134,7 @@ nav {
 }
 
 /* Toolkit features */
-#weeding-form {
-    display: none;
-}
-#watering-form {
-    display: none;
-}
-#cancel-water {
-    display: none;
-}
-#watering-update-form {
+#weeding-form, #watering-form, #cancel-erase, #cancel-water, #watering-update-form {
     display: none;
 }
 

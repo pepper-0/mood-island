@@ -70,6 +70,34 @@ app.delete("/plants/:tileID", async (req, res) => { // taken frm geeksforgeeks c
     
 });
 
+//PATCH
+app.patch("/plants/:tileID", async (req, res) => {
+    try {
+        console.log("entered patch");
+        const data = await loadEntries(); // obtain data first
+        const deleteID = parseInt(req.params.tileID);
+        console.log("obtained data");
+        var plant = data.find(p => p.tileID === deleteID && !p.erased);
+        console.log("found plant");
+        var plantIndex = data.findIndex(p => p.tileID === deleteID && !p.erased);
+        console.log("found plant index");
+        plant.title = req.body.title; // update the title field with new value from request body
+        plant.eraseCode = req.body.eraseCode; // update the eraseCode field with new value from request body
+        plant.entry = req.body.entry; // update the entry field with new value from request body
+        console.log("assigned req to plant");
+        // update json file too
+        data[plantIndex] = plant; // update the item in the array
+        console.log("assigned to array in proper index");
+        // now turn the array into a JSON again and write into the JSON file.
+        await fsp.writeFile(filePath, JSON.stringify(data, null, 2));
+        console.log("wrote into file");
+
+        res.status(200).send("plant has been updated");
+    } catch {
+        res.status(500).send("youre cooked lols");
+    }
+});
+
 // taken from hack club Express server example. parses JSON str into array
 function loadEntries() {
     console.log("loading entries from plants.json");
