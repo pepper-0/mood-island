@@ -9,39 +9,12 @@
     "image": "assets/flowers/orange_flower.png"
   },
   {
-    "tileID": 2,
-    "title": "a secondary test by jana",
-    "erased": false,
-    "eraseCode": "DONOTERASE",
-    "entry": "a bit late,  but i'm finally getting to work on it again! yay.",
-    "date": "2025-10-06",
-    "image": "assets/flowers/pink_flower.png"
-  },
-  {
     "tileID": 17,
     "title": "Hanging out with Jana",
     "erased": false,
     "eraseCode": "",
     "entry": "Had a fun time hangout with Jana after school downtown.",
     "date": "2025-10-10",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 5,
-    "title": "throwaway",
-    "erased": false,
-    "eraseCode": "code",
-    "entry": "yeah",
-    "date": "2025-10-12",
-    "image": "assets/flowers/succulent.png"
-  },
-  {
-    "tileID": 13,
-    "title": "samantha\n\nabc",
-    "erased": false,
-    "eraseCode": "12345",
-    "entry": "that was strange\n\nabcdefg!\nhijklmnop",
-    "date": "2025-10-14",
     "image": "assets/flowers/succulent.png"
   }
 ]

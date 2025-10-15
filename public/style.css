@@ -8,9 +8,44 @@
 
 @font-face {
     font-family: 'header';
-    src: url('assets/karmatic-arcade/ka1.ttf') format('truetype');
+    src: url('assets/moodcake-font/Moodcake-5yz4B.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+@keyframes blinking-cursor {
+    from { border-color: transparent; }
+    to { border-color: black; }
+}
+
+@keyframes floating {
+    0% { transform: translateY(0) }
+    50% { transform: translateY(-20px) }
+    100% { transform: translateY(0) }
+}
+
+#header {
+    animation: typing 15s steps(200, end), blinking-cursor 0.5s step-end 20s;
+    white-space: nowrap;
+    border-right: 4px black;
+    overflow: hidden;
+}
+
+#island {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    animation: floating 6s ease-in-out infinite;
+}
+#island-title {
+    animation: floating 6s ease-in-out infinite;
 }
 
 body {
@@ -34,8 +69,12 @@ h1 {
     font-size: 40px;
 }
 
-h2, h3 {
+h2 {
     font-size: 30px;
+}
+
+h3 {
+    font-size: 25px;
 }
 
 input, textarea {
@@ -43,9 +82,20 @@ input, textarea {
     margin-top: 3px;
     margin-bottom: 3px;
     font-family: 'standard', 'sans-serif';
-    font-size: 26px;
+    font-size: 20px;
     background-color: rgb(190, 193, 194);
     border-style: solid;
+    border-color: #7a828a;
+}
+
+button {
+    padding: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-family: 'standard', 'sans-serif';
+    font-size: 20px;
+    background-color: rgb(223, 226, 226);
+    border-style: groove;
     border-color: #7a828a;
 }
 
@@ -156,17 +206,9 @@ nav {
     border-radius: 4px;
 }
 
+
 /* Island styles */
-#island {
-    width: 400px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(5, 80px);
-    grid-template-rows: repeat(5, 80px);
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 .tile {
     border: 2px solid #6f936f;
     width: 80px;

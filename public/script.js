@@ -93,6 +93,7 @@ function openFeature() { // open up a toolbox feature
 /* ISLAND */
 var nSlots = 5; // slots for 2D array
 var island = document.getElementById("island"); // the island div
+
 // tileArray: the container array (gh copilot)
 let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d global array; holds all tiles (NOT just plants, some may be EMPTY)
     Array.from({ length: nSlots }, (_, col) => ({
@@ -110,21 +111,26 @@ var plantConfirmation = document.getElementById("plant-confirmation"); // confir
 var entries = document.getElementById("entries"); // to update the entries shown in the page
 var allPlants = []; // holds all plalnt entries
 var tilePlants = []; // holds all plants on island
+assembleIsland();
 updateEntriesInPage(); // function to load existing entries when page loads; adds all entries into allPlants
 
 const islandPlatform = document.getElementById("island-platform"); // island itself
 island.innerHTML = ""; // Clear any existing tiles
 
 // place allPlant entries and place them in the tileArray and tilePlants if applicable
-for (plant of allPlants) { 
-    var space = plant.tileID; // get tileID of plant
-    if (space < 0 || space >= nSlots * nSlots) { // check if space is valid; otherwise add it into the tileArray and the tilePlants
-        continue; // skip invalid tileIDs
+function assembleIsland() {
+    island.style.gridTemplateColumns = `repeat(${nSlots}, ${Math.floor(400/nSlots)}px)`; // dynamically set grid based on nSlots
+    island.style.gridTemplateRows = `repeat(${nSlots}, ${Math.floor(400/nSlots)}px)`;
+    for (plant of allPlants) { 
+        var space = plant.tileID; // get tileID of plant
+        if (space < 0 || space >= nSlots * nSlots) { // check if space is valid; otherwise add it into the tileArray and the tilePlants
+            continue; // skip invalid tileIDs
+        }
+        var row = Math.floor(space / nSlots); // calculate row
+        var col = space % nSlots; // calculate col
+        tileArray[row][col].plant = plant; // place plant in tileArray
+        tilePlants.push(plant); // add plant to tilePlants array
     }
-    var row = Math.floor(space / nSlots); // calculate row
-    var col = space % nSlots; // calculate col
-    tileArray[row][col].plant = plant; // place plant in tileArray
-    tilePlants.push(plant); // add plant to tilePlants array
 }
 
 /* HANDLE WATERING/PLANTING */
@@ -211,7 +217,6 @@ function selectTile() { // gh copilot; idk how to use promise
         }
     });
 }
-
 
 /* HANDLE WEEDING/DELETING */
 var cancelErase = document.getElementById("cancel-erase");
