@@ -16,5 +16,14 @@
     "entry": "Had a fun time hangout with Jana after school downtown.",
     "date": "2025-10-10",
     "image": "assets/flowers/succulent.png"
+  },
+  {
+    "tileID": 9,
+    "title": "yeah",
+    "erased": false,
+    "eraseCode": "",
+    "entry": "yeah yeah yeah",
+    "date": "2025-10-17",
+    "image": "assets/flowers/yellow_flower.png"
   }
 ]

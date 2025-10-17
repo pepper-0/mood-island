@@ -108,6 +108,12 @@ var infoContent = document.getElementById("info-content");
 var plantForm = document.getElementById("plant-form"); // the form itself
 plantForm.addEventListener("submit", plantSubmit); // to submit your plant diary entry
 var plantConfirmation = document.getElementById("plant-confirmation"); // confirmation message
+var plantSelector = document.getElementById("plant-selector"); // choose which plant
+var plantChoices = document.getElementsByClassName("plant-choice");
+for (let plantChoice of plantChoices) {
+    plantChoice.addEventListener("click", choosePlantImg);
+}
+var selectedPlantImg = null; 
 var entries = document.getElementById("entries"); // to update the entries shown in the page
 var allPlants = []; // holds all plalnt entries
 var tilePlants = []; // holds all plants on island
@@ -167,6 +173,12 @@ async function plantSubmit(e) { // handle submitting the plant form
         tileID = -1; // will not be placed on island
     }
 
+    var image;
+    if (selectedPlantImg != null)
+        image = selectedPlantImg;
+    else 
+        image = "assets/flowers/bush.png";
+
     // create data entry object
     const dataEntry = {
         // e.target is the form that was submitted
@@ -177,7 +189,7 @@ async function plantSubmit(e) { // handle submitting the plant form
         entry: e.target.entry.value,
         // taken straight from copilot lols, takes date and turns it into date str
         date: new Date().toISOString().split("T")[0],
-        image: "assets/flowers/succulent.png" // placeholder image for now, will add user choosing functionality later
+        image: image
     }
 
     await fetch("/plants", { // send request to /plant endpoint in server.js (express server)
@@ -188,13 +200,35 @@ async function plantSubmit(e) { // handle submitting the plant form
         body: JSON.stringify(dataEntry) // convert dataEntry to JSON str
     });
 
+    // reset
     txt.innerHTML = "";
-
     await updateEntriesInPage();
-
     plantForm.reset();
-
+    selectedPlantImg = null;
+    for (let plantChoice of plantChoices) {
+        plantChoice.style.backgroundColor = "transparent";
+    }
     plantConfirmation.innerHTML = "planting successful!";
+}
+
+function choosePlantImg() {
+    for (let plantChoice of plantChoices) {
+        plantChoice.style.backgroundColor = "transparent";
+    }
+    this.style.backgroundColor = "#7a828a";
+    if (this.id === "blue") {
+        selectedPlantImg = "assets/flowers/blue_flower.png";
+    } else if (this.id === "orange") {
+        selectedPlantImg = "assets/flowers/orange_flower.png";
+    } else if (this.id === "yellow") {
+        selectedPlantImg = "assets/flowers/yellow_flower.png";
+    } else if (this.id === "pink") {
+        selectedPlantImg = "assets/flowers/pink_flower.png";
+    } else if (this.id === "succulent") {
+        selectedPlantImg = "assets/flowers/succulent.png";
+    } else if (this.id === "bush") {
+        selectedPlantImg = "assets/flowers/bush.png";
+    }
 }
 
 /* PLANT-SPECIFIC SETUP */

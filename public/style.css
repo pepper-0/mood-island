@@ -83,7 +83,7 @@ input, textarea {
     margin-bottom: 3px;
     font-family: 'standard', 'sans-serif';
     font-size: 20px;
-    background-color: rgb(190, 193, 194);
+    background-color: #bec1c2;
     border-style: solid;
     border-color: #7a828a;
 }
@@ -94,7 +94,7 @@ button {
     margin-bottom: 3px;
     font-family: 'standard', 'sans-serif';
     font-size: 20px;
-    background-color: rgb(223, 226, 226);
+    background-color: #dfe2e2;
     border-style: groove;
     border-color: #7a828a;
 }
@@ -186,6 +186,25 @@ nav {
 /* Toolkit features */
 #weeding-form, #watering-form, #cancel-erase, #cancel-water, #watering-update-form {
     display: none;
+}
+
+#plant-selector {
+    align-items: center;
+    display: inline-flex;
+    border-style: solid;
+    background-color: #bec1c2;
+    border-color: #7a828a;
+    border-width: 1px;
+    color: #7a828a;
+}
+.plant-choice {
+    width: 15%;
+    height: auto;
+    max-width: 50px;
+}
+#select-label {
+    padding-left: 3px;
+    font-size: 20px;
 }
 
 /* Play area styles */
