@@ -91,15 +91,9 @@ function openFeature() { // open up a toolbox feature
 }
 
 /* ISLAND */
-var nSlots = 5; // slots for 2D array
 var island = document.getElementById("island"); // the island div
 
-// tileArray: the container array (gh copilot)
-let tileArray = Array.from({ length: nSlots }, (_, row) => // tileArray is a 2d global array; holds all tiles (NOT just plants, some may be EMPTY)
-    Array.from({ length: nSlots }, (_, col) => ({
-        plant: null // it will hold a plant object
-    }))
-);
+
 
 /* INFORMATION BOX */
 var infoContent = document.getElementById("info-content");
@@ -115,16 +109,44 @@ for (let plantChoice of plantChoices) {
 }
 var selectedPlantImg = null; 
 var entries = document.getElementById("entries"); // to update the entries shown in the page
+let tileArray;
 var allPlants = []; // holds all plalnt entries
 var tilePlants = []; // holds all plants on island
-assembleIsland();
-updateEntriesInPage(); // function to load existing entries when page loads; adds all entries into allPlants
+let nSlots = 5; // default slots for 2D array
+
+// fetch config then initialize structures that depend on nSlots
+fetch('/config')
+    .then(res => {
+        if (!res.ok) throw new Error('config fetch failed');
+        return res.json();
+    })
+    .then(cfg => {
+        if (cfg && typeof cfg.tileSize === 'number' && cfg.tileSize > 0) nSlots = cfg.tileSize;
+
+        // tileArray: the container array
+        tileArray = Array.from({ length: nSlots }, (_, row) =>
+            Array.from({ length: nSlots }, (_, col) => ({ plant: null }))
+        );
+
+        assembleIsland();
+        updateEntriesInPage();
+    })
+    .catch(err => {
+        console.warn('Could not load config, using defaults:', err);
+        // still initialize tileArray with default nSlots so page works
+        tileArray = Array.from({ length: nSlots }, (_, row) =>
+            Array.from({ length: nSlots }, (_, col) => ({ plant: null }))
+        );
+        assembleIsland();
+        updateEntriesInPage();
+    });
 
 const islandPlatform = document.getElementById("island-platform"); // island itself
 island.innerHTML = ""; // Clear any existing tiles
 
 // place allPlant entries and place them in the tileArray and tilePlants if applicable
 function assembleIsland() {
+    console.log("assembling island");
     island.style.gridTemplateColumns = `repeat(${nSlots}, ${Math.floor(400/nSlots)}px)`; // dynamically set grid based on nSlots
     island.style.gridTemplateRows = `repeat(${nSlots}, ${Math.floor(400/nSlots)}px)`;
     for (plant of allPlants) { 
@@ -472,7 +494,12 @@ async function updateEntriesInPage() {
 
             const row = Math.floor((i - 1) / nSlots);
             const col = (i - 1) % nSlots;
-            tileArray[row][col].plant = plant; // update tileArray with the plant
+            // defensive: ensure tileArray and row exist
+            if (!tileArray || !tileArray[row]) {
+                console.warn('tileArray not initialized correctly, skipping tileArray write for', i);
+            } else {
+                tileArray[row][col].plant = plant; // update tileArray with the plant
+            }
             
             const item = document.createElement("div");
             const plantIcon = document.createElement("img");

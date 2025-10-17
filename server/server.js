@@ -7,6 +7,8 @@ const PORT = 3000; // port number for server to listen on
 const path = require("path");
 
 const filePath = path.join(__dirname, "/plants.json"); // path to plants.json file
+const pkg = require(path.join(__dirname, '..', 'package.json'));
+var nSlots = pkg.config.tileSize;
 
 // middleware
 app.use(express.json()); // makes express pares json data
@@ -16,6 +18,17 @@ app.use(express.static(path.join(__dirname, "../public"))); // serve static file
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.url}`);
   next();
+});
+
+// GET (nSlots)
+// CONFIG - expose package.json config to frontend
+app.get('/config', (req, res) => {
+    try {
+        const cfg = pkg && pkg.config ? pkg.config : { tileSize: 5 };
+        res.json(cfg);
+    } catch (err) {
+        res.status(500).json({ tileSize: 5 });
+    }
 });
 
 // POST

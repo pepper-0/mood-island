@@ -12,5 +12,8 @@
   },
   "keywords": ["mood", "diary", "plants", "express"],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "config": {
+    "nSlots": 5
+  }
 }

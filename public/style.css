@@ -198,13 +198,14 @@ nav {
     color: #7a828a;
 }
 .plant-choice {
-    width: 15%;
+    width: 14%;
     height: auto;
     max-width: 50px;
 }
 #select-label {
     padding-left: 3px;
     font-size: 20px;
+    width: 14%;
 }
 
 /* Play area styles */
