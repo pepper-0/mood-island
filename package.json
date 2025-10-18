@@ -10,10 +10,15 @@
   "dependencies": {
     "express": "^4.18.2"
   },
-  "keywords": ["mood", "diary", "plants", "express"],
+  "keywords": [
+    "mood",
+    "diary",
+    "plants",
+    "express"
+  ],
   "author": "",
   "license": "MIT",
   "config": {
-    "nSlots": 5
+    "nSlots": 6
   }
 }

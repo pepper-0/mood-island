@@ -102,6 +102,7 @@ var infoContent = document.getElementById("info-content");
 var plantForm = document.getElementById("plant-form"); // the form itself
 plantForm.addEventListener("submit", plantSubmit); // to submit your plant diary entry
 var plantConfirmation = document.getElementById("plant-confirmation"); // confirmation message
+var expandIsland = document.getElementById("expand-island"); // island expansion button
 var plantSelector = document.getElementById("plant-selector"); // choose which plant
 var plantChoices = document.getElementsByClassName("plant-choice");
 for (let plantChoice of plantChoices) {
@@ -181,9 +182,13 @@ async function plantSubmit(e) { // handle submitting the plant form
     /* START CODE HERE: functionality for clicking a tile to add to */
     // plantForm has a new div that asks where you'd like to select tile to: maybe make some visual styling that indicates this also
     const item = document.createElement("div");
-    const txt = document.createElement("p");
-    txt.innerHTML = "Click on an empty tile slot to plant your entry there!";
-    item.appendChild(txt);
+
+    if (allPlants.length >= nSlots*nSlots) { // expand island 
+        expandIsland.style.display = "block";
+        expandIsland.addEventListener("click", expand);
+    }
+
+    plantConfirmation.innerHTML = "Click on an empty tile slot to plant your entry there!";
     // consider that this may have to be removed later
     plantForm.appendChild(item);
     // cool functionality to consider later: hovered slot that shows if the thing is occupied or not. i don't wanna have to do that rn tho lol
@@ -223,7 +228,6 @@ async function plantSubmit(e) { // handle submitting the plant form
     });
 
     // reset
-    txt.innerHTML = "";
     await updateEntriesInPage();
     plantForm.reset();
     selectedPlantImg = null;
@@ -231,6 +235,31 @@ async function plantSubmit(e) { // handle submitting the plant form
         plantChoice.style.backgroundColor = "transparent";
     }
     plantConfirmation.innerHTML = "planting successful!";
+}
+
+async function expand() {
+    try {
+        nSlots++;
+        // update
+        await fetch('/config', {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify( {tileSize: nSlots})
+        });
+
+        // redo tilearray to ahve the correct size
+        tileArray = Array.from({ length: nSlots }, (_, row) =>
+            Array.from({ length: nSlots }, (_, col) => ({ plant: null }))
+        );
+        expandIsland.style.display = "none";
+ 
+    } catch {
+        console.log("LOL you thought u were done with this program huh. no youre not, youre cooked");
+    }
+    assembleIsland();
+    updateEntriesInPage();
 }
 
 function choosePlantImg() {
@@ -472,18 +501,6 @@ async function updateEntriesInPage() {
 
     entries.innerHTML = ""; // reset 
     tilePlants = []; // reset tilePlants array
-
-    // entry display (at the bottom of the page)
-    // allPlants.forEach(plant => { // loop through each plant entry
-    //     const entryDiv = document.createElement("div"); // create a div for each entry
-    //     entryDiv.classList.add("entry"); // add class for styling
-    //     entryDiv.innerHTML = `<h3>${plant.title}</h3><p>${plant.entry}</p><small>${plant.date}</small>`; // add content to div
-    //     //entries.innerHTML += entryDiv.outerHTML; // add div to entries container in page
-    //     entries.appendChild(entryDiv); // add div to entries container in page
-    // });
-
-    // island display (the tiles). for now, all the items to be refreshed; later maybe adjust to tile-by-tile refresh instead 
-    // clear island display
     island.innerHTML = ""; 
     // these represent each item in tileArray
     for (let i = 1; i <= nSlots * nSlots; i++) { // provides #, matches tileID
@@ -502,9 +519,13 @@ async function updateEntriesInPage() {
             }
             
             const item = document.createElement("div");
+            item.style.width = `${Math.floor(400/nSlots)}px`;
+            item.style.height = `${Math.floor(400/nSlots)}px`;
             const plantIcon = document.createElement("img");
             plantIcon.src = plant.image;
             plantIcon.className = "plantIcon";
+            plantIcon.style.width = `${Math.floor(400/nSlots)}px`;
+            plantIcon.style.width = `${Math.floor(400/nSlots)}px`;
             item.appendChild(plantIcon);
             item.className = "tile";
             item.id = i;
@@ -524,6 +545,8 @@ async function updateEntriesInPage() {
             // empty tile; display empty tile
             const item = document.createElement("div");
             item.className = "tile";
+            item.style.width = `${Math.floor(400/nSlots)}px`;
+            item.style.height = `${Math.floor(400/nSlots)}px`;
             item.id = i;
             island.appendChild(item);
 

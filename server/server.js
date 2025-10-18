@@ -7,8 +7,7 @@ const PORT = 3000; // port number for server to listen on
 const path = require("path");
 
 const filePath = path.join(__dirname, "/plants.json"); // path to plants.json file
-const pkg = require(path.join(__dirname, '..', 'package.json'));
-var nSlots = pkg.config.tileSize;
+const configPath = path.join(__dirname, '..', 'package.json');
 
 // middleware
 app.use(express.json()); // makes express pares json data
@@ -20,16 +19,65 @@ app.use((req, res, next) => {
   next();
 });
 
-// GET (nSlots)
-// CONFIG - expose package.json config to frontend
+// GET (nSlots) CONFIG - expose package.json config to frontend
 app.get('/config', (req, res) => {
+    fs.readFile(configPath, 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).json({ tileSize: 5 });
+            return;
+        }
+        try {
+            const jsonData = JSON.parse(data);
+            const tileSize = (jsonData.config && (jsonData.config.nSlots || json.config.tileSize)) || 5;
+            res.json(tileSize);
+        } catch (err) {
+            res.status(500).json({ tileSize: 5 });
+        } 
+    });
+});
+
+
+// PATCH CONFIG - update tileSize
+app.patch("/config", async (req, res) => {
     try {
-        const cfg = pkg && pkg.config ? pkg.config : { tileSize: 5 };
-        res.json(cfg);
-    } catch (err) {
-        res.status(500).json({ tileSize: 5 });
+        // grab tilesize
+        const body = req.body;
+        if (!('tileSize' in body)) { // checker for tilesize to be present
+            res.status(400).send("error; not tile size")
+        }
+        const updatedTileSize = body.tileSize;
+
+        // update data
+        const data = await loadConfig();
+        const newData = Object.assign({}, data, {config: {nSlots: updatedTileSize}})
+        await fsp.writeFile(configPath, JSON.stringify(newData, null, 2));
+
+        res.status(200).send("plant has been updated");
+    } catch {
+        console.error("PATCH /config failed:", err);
+        res.status(500).send("youre cooked lols");
     }
 });
+
+// helper
+async function loadConfig() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(configPath, 'utf8', (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                try {
+                    const jsonData = JSON.parse(data);
+                    resolve(jsonData);
+                } catch (parseErr) {
+                    reject(parseErr);
+                }
+            }
+        });
+    });
+}
+
+// PLANTS
 
 // POST
 app.post("/plants", (req, res) => { // set up route for post requests to /plants endpoint

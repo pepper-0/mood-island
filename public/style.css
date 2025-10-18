@@ -208,6 +208,10 @@ nav {
     width: 14%;
 }
 
+#expand-island {
+    display: none;
+}
+
 /* Play area styles */
 #play-area {
     display: grid;
