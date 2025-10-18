@@ -122,7 +122,8 @@ fetch('/config')
         return res.json();
     })
     .then(cfg => {
-        if (cfg && typeof cfg.tileSize === 'number' && cfg.tileSize > 0) nSlots = cfg.tileSize;
+        if (cfg && typeof cfg.nSlots === 'number' && cfg.nSlots > 0) 
+            nSlots = cfg.nSlots;
 
         // tileArray: the container array
         tileArray = Array.from({ length: nSlots }, (_, row) =>

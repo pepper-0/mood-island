@@ -23,15 +23,17 @@ app.use((req, res, next) => {
 app.get('/config', (req, res) => {
     fs.readFile(configPath, 'utf8', (err, data) => {
         if (err) {
-            res.status(500).json({ tileSize: 5 });
+            const nSlots = 5;
+            res.status(500).json({nSlots});
             return;
         }
         try {
             const jsonData = JSON.parse(data);
-            const tileSize = (jsonData.config && (jsonData.config.nSlots || json.config.tileSize)) || 5;
-            res.json(tileSize);
+            const nSlots = (jsonData.config && (jsonData.config.nSlots)) || 5;
+            res.json({nSlots});
         } catch (err) {
-            res.status(500).json({ tileSize: 5 });
+            const nSlots = 5;
+            res.status(500).json({nSlots});
         } 
     });
 });

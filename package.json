@@ -19,6 +19,6 @@
   "author": "",
   "license": "MIT",
   "config": {
-    "nSlots": 6
+    "nSlots": 5
   }
 }
