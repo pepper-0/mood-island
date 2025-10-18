@@ -35,24 +35,41 @@
     overflow: hidden;
 }
 
-#island {
-    width: 400px;
-    height: 400px;
-    display: grid;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    animation: floating 6s ease-in-out infinite;
-}
-#island-title {
-    animation: floating 6s ease-in-out infinite;
+
+#text-area {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    animation: floating 7s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
 }
 
 body {
     font-family: 'standard', sans-serif;
     margin: 20px;
-    background-color: #c5d7e6;
+    background-color: #4b4c59;
     display:block;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+    padding: 0px;
+}
+
+main {
+    background-color: white;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 30px;
+    padding: 25px;
+    height: 90%;
+    width: 90%;
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+
 }
 
 p {
@@ -113,20 +130,13 @@ button {
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
 }
-.sidebar .close-button {
-    position: absolute;
-    top: 20px;
-    left: 25px;
-    font-size: 36px;
-    margin-right: 50px;
-    color: white;
-    cursor: pointer;
-}
 
 nav {
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 0 auto;
+    margin-right: 0 auto;
 }
 .sidebar-button {
     display: inline;
@@ -142,6 +152,11 @@ nav {
     cursor: pointer;
 }
 
+/* edit panel */
+#edit-panel-header {
+    display: flex;
+}
+
 /* Toolkit styles */
 #toolkit {
     display: flex;
@@ -155,13 +170,14 @@ nav {
     border-style: solid;
     border-radius: 4px;
     border-width: 2px;
+    margin: 10px;
 }
 
 #toolkit-button {
-    padding: 10px;
+    padding: 5px;
     margin-right: 2px;
     transition: transform 0.3s ease;
-    font-size: 24px;
+    font-size: 20px;
 }
 #toolkit-button:hover {
     cursor: pointer;
@@ -171,8 +187,8 @@ nav {
     display: none;
 }
 .toolkit-option {
-    padding: 10px;
-    font-size: 24px;
+    padding: 5px;
+    font-size: 20px;
 }
 .toolkit-option:hover {
     cursor: pointer;
@@ -207,17 +223,15 @@ nav {
     font-size: 20px;
     width: 14%;
 }
-
 #expand-island {
     display: none;
 }
 
 /* Play area styles */
 #play-area {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     margin-top: 10px;
 }
 .play-element {
@@ -232,7 +246,20 @@ nav {
 
 
 /* Island styles */
-
+#island-platform {
+    width: 60%;
+}
+#island {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    animation: floating 5s ease-in-out infinite;
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
 .tile {
     border: 2px solid #6f936f;
     width: 80px;

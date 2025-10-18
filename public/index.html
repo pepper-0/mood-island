@@ -8,112 +8,110 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class = "sidebar-button" id = "sidebar-info" >what's mood island? (faq)</div>
-        <div class = "sidebar-button" id = "sidebar-documentation">credits & documentation</div>
-    </nav>
-    <div id = "sidebar" class = "sidebar">
-        <div class = "sidebar-button" id = "sidebar-close">↩</div>
-        <div id = "sidebar-content">
-            <!-- sidebar content will be inserted here -->
-                
-        </div>
-    </div>
-    <h1 id = "header">look, it's the internet's mood island!</h1>
-    <div id = "toolkit">
-        <!-- includes all the editing modes which is a drop down that can be opened up: plant, shovel, water -->
-        <div id = "toolkit-button">🛠️</div>
-        <div id = "toolkit-content">
-            <div class = "toolkit-option" id = "toolkit-plant">🌱</div>
-            <div class = "toolkit-option" id = "toolkit-shovel">⛏️</div>
-            <div class = "toolkit-option" id = "toolkit-water">💧</div>
-        </div>
-    </div>
-    <br/>
     <main>
+        <nav>
+            <div class = "sidebar-button" id = "sidebar-info" >what's mood island? (faq)</div>
+            <div class = "sidebar-button" id = "sidebar-documentation">credits & documentation</div>
+        </nav>
+        <h1 id = "header">welcome to the internet's mood island!</h1>
+        <br/>
         <div id = "play-area">
-            <div id = "edit-panel" class = "play-element">
-                <h2>your current mode</h2>
-                <form id="plant-form" class = "tool-content"> <!--taken from express; diary entry form-->
-                    <p>click below to add a plant (diary) entry</p>
-                    <input id="title" name="title" placeholder="title" maxlength="100">
-                    <br/>
-                    <input id="erase-code" name="eraseCode" maxlength = "100" placeholder="pass code (keep safe to delete/update your entries!)">
-                    <br/>
-                    <textarea placeholder="entry" id="entry"></textarea>
-                    <br/>
-                    <div id = "plant-selector">
-                        <div id = "select-label">choose</div>
-                        <img src = "assets/flowers/blue_flower.png" id = "blue" class = "plant-choice">
-                        <img src = "assets/flowers/orange_flower.png" id = "orange" class = "plant-choice">
-                        <img src = "assets/flowers/yellow_flower.png" id = "yellow" class = "plant-choice">
-                        <img src = "assets/flowers/pink_flower.png" id = "pink" class = "plant-choice">
-                        <img src = "assets/flowers/succulent.png" id = "succulent" class = "plant-choice">
-                        <img src = "assets/flowers/bush.png" id = "bush" class = "plant-choice">
-                    </div>
-                    <br/>
-                    <button id = "expand-island">island is full; expand island!</button>
-                    <button type="submit">plant entry!</button>
-                    <p id = plant-confirmation></p>
-                </form>
-                <div id = "weeding" class = "tool-content">
-                    <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
-                    <button id = "cancel-erase">nevermind, cancel</button>
-
-                    <form id = "weeding-form">
-                        <p>please enter the passcode</p>
-                        <input placeholder="passcode" maxlength = "100"  name = enteredEraseCode id="confirm-erase"></input>
-                        <br/>
-                        <button type="submit">yes, i want to erase!</button>
-                    </form>
-                    <p id = erase-confirmation></p>
-                </div>
-                <div id = "watering" class="tool-content" >
-                    <p>you can water (update) diary entries here</p>
-                    <form id = "watering-form"> 
-                        <br>
-                        <p>please enter passcode</p>
-                        <input placeholder="passcode" maxlength = "100" name = enteredPassCode id="confirm-water"></input>
-                        <br/>
-                        <button type="submit">i'm ready to update</button>
-                    </form>
-                    <form id = "watering-update-form"> 
-                        <br>
-                        <p>update your diary entry in the fields below!: </p>
-                        <input id = "update-title" name = "updatedTitle" maxlength = "100"></input>
-                        <br>
-                        <input id = "update-erase-code" maxlength = "100" name = "updatedEraseCode"></input>
-                        <br>
-                        <textarea id = "update-entry" name = "updatedEntry" ></textarea>
-                        <br>
-                        <button type = "submit">update!</button>
-                    </form>
-                    <button id = "cancel-water">nevermind, cancel</button>
-                    <p id = "water-confirmation"></p>
-                    
-                </div>
-            </div>
-
             <div id = "island-platform">
-                <h2 id = "island-title">mood island</h2>
                 <div id = "island">
                     <!-- all done through js -->
+                    
                 </div>
+                <div id = "shadow">shadow</div>
             </div>
+            <div id = "text-area">
+                <div id = "info-panel" class = "play-element">
+                    <h3> click around to get started! </h3>
+                    <div id = "info-content">
+                        <!-- info content will be inserted here -->
+                    </div>
+                    <div id = "sidebar-content">
+                        <!-- sidebar content will be inserted here -->
+                    </div>
+                </div>
+                <div id = "edit-panel" class = "play-element">
+                    <div id = "edit-panel-header">
+                        <h3>editor</h3>
+                        <div id = "toolkit">
+                            <!-- includes all the editing modes which is a drop down that can be opened up: plant, shovel, water -->
+                            <div id = "toolkit-button">⚙️</div>
+                            <div id = "toolkit-content">
+                                <div class = "toolkit-option" id = "toolkit-plant">🌱</div>
+                                <div class = "toolkit-option" id = "toolkit-shovel">⛏️</div>
+                                <div class = "toolkit-option" id = "toolkit-water">💧</div>
+                            </div>
+                        </div>
+                    </div>
 
-            <div id = "info-panel" class = "play-element">
-                <h2> looky here, information !!</h2>
-                <div id = "info-content">
-                    <!-- info content will be inserted here -->
+                    <form id="plant-form" class = "tool-content"> <!--taken from express; diary entry form-->
+                        <p>click below to add a plant (diary) entry</p>
+                        <input id="title" name="title" placeholder="title" maxlength="100">
+                        <br/>
+                        <input id="erase-code" name="eraseCode" maxlength = "100" placeholder="pass code (keep safe to delete/update your entries!)">
+                        <br/>
+                        <textarea placeholder="entry" id="entry"></textarea>
+                        <br/>
+                        <div id = "plant-selector">
+                            <div id = "select-label">choose</div>
+                            <img src = "assets/flowers/blue_flower.png" id = "blue" class = "plant-choice">
+                            <img src = "assets/flowers/orange_flower.png" id = "orange" class = "plant-choice">
+                            <img src = "assets/flowers/yellow_flower.png" id = "yellow" class = "plant-choice">
+                            <img src = "assets/flowers/pink_flower.png" id = "pink" class = "plant-choice">
+                            <img src = "assets/flowers/succulent.png" id = "succulent" class = "plant-choice">
+                            <img src = "assets/flowers/bush.png" id = "bush" class = "plant-choice">
+                        </div>
+                        <br/>
+                        <button id = "expand-island">island is full; expand island!</button>
+                        <button type="submit">plant entry!</button>
+                        <p id = plant-confirmation></p>
+                    </form>
+                    <div id = "weeding" class = "tool-content">
+                        <p>you can weed out (remove) diary entries here. click on any plant to select and weed it out.</p>
+                        <button id = "cancel-erase">nevermind, cancel</button>
+
+                        <form id = "weeding-form">
+                            <p>please enter the passcode</p>
+                            <input placeholder="passcode" maxlength = "100"  name = enteredEraseCode id="confirm-erase"></input>
+                            <br/>
+                            <button type="submit">yes, i want to erase!</button>
+                        </form>
+                        <p id = erase-confirmation></p>
+                    </div>
+                    <div id = "watering" class="tool-content" >
+                        <p>you can water (update) diary entries here</p>
+                        <form id = "watering-form"> 
+                            <br>
+                            <p>please enter passcode</p>
+                            <input placeholder="passcode" maxlength = "100" name = enteredPassCode id="confirm-water"></input>
+                            <br/>
+                            <button type="submit">i'm ready to update</button>
+                        </form>
+                        <form id = "watering-update-form"> 
+                            <br>
+                            <p>update your diary entry in the fields below!: </p>
+                            <input id = "update-title" name = "updatedTitle" maxlength = "100"></input>
+                            <br>
+                            <input id = "update-erase-code" maxlength = "100" name = "updatedEraseCode"></input>
+                            <br>
+                            <textarea id = "update-entry" name = "updatedEntry" ></textarea>
+                            <br>
+                            <button type = "submit">update!</button>
+                        </form>
+                        <button id = "cancel-water">nevermind, cancel</button>
+                        <p id = "water-confirmation"></p>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- <h2>all diary entries</h2> -->
-        <div id="entries">
-            <!-- diary entries will be appended here -->
-        </div>
-
     </main>
+    <!-- <h2>all diary entries</h2> -->
+    <div id="entries">
+        <!-- diary entries will be appended here -->
+    </div>
 </body>
 </html>
