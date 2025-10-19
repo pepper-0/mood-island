@@ -1,7 +1,7 @@
 # mood-island
 plant-themed mood diary recorded on the internet's mini-island
 
-welcome to the internet's mood island! here, you can look, plant, water, and weed plants. each plant occupies a slot on the mood island, and is a diary entry by someone. check it out [here]()! :D
+welcome to the internet's mood island! here, you can look, plant, water, and weed plants. each plant occupies a slot on the mood island, and is a diary entry by someone. check it out [here](https://mood-island-production.up.railway.app/)! :D
 
 ### *main features*
 - View: click on any plant to view the diary entry within it
