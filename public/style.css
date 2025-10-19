@@ -1,3 +1,11 @@
+/* Color Palette
+#e3e7e8: white (border, text)
+#7a828a70: semi-transparent blue for elements within main area
+#7a828a: full (for text/input border and text)
+#bec1c2e4: semi-transparent gray for textinput (toolkit stuff)
+#dfe2e2: button background
+*/
+
 /* General styles */
 @font-face {
     font-family: 'standard';
@@ -28,13 +36,6 @@
     100% { transform: translateY(0) }
 }
 
-#header {
-    animation: typing 15s steps(200, end), blinking-cursor 0.5s step-end 20s;
-    white-space: nowrap;
-    border-right: 4px black;
-    overflow: hidden;
-}
-
 
 #text-area {
     margin-top: 25px;
@@ -43,12 +44,17 @@
     display: flex;
     flex-direction: column;
     width: 30%;
+    background-color: #7a828a70;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
 }
 
 body {
     font-family: 'standard', sans-serif;
     margin: 20px;
-    background-color: #4b4c59;
+    background-color: #808188;
     display:block;
 }
 
@@ -57,28 +63,24 @@ html {
     width: 100vw;
     margin: 0px;
     padding: 0px;
+    color: #e3e7e8;
 }
 
 main {
-    background-color: white;
-    border-color: white;
-    border-width: 2px;
-    border-radius: 30px;
+    background-image: url("./assets/mood_island_background.png");
+    border-color: #e3e7e8;
+    border-width: 2.5px;
+    border-radius: 50px;
+    border-style: solid;
     padding: 25px;
     height: 90%;
     width: 90%;
-    margin-left: 0 auto;
-    margin-right: 0 auto;
-
+    margin: 0px auto;
+    margin-top: 3%;
 }
 
 p {
     font-size: 20px;
-}
-
-#main {
-    transition: margin-right .5s;
-    padding: 20px;
 }
 
 h1 {
@@ -88,10 +90,19 @@ h1 {
 
 h2 {
     font-size: 30px;
+    margin: 10px;
 }
 
 h3 {
     font-size: 25px;
+    margin: 5px;
+}
+
+hr {
+    width: 90%;
+    border: none;
+    border-top: 2px solid #e3e7e8;
+    margin: 0px auto;
 }
 
 input, textarea {
@@ -100,8 +111,9 @@ input, textarea {
     margin-bottom: 3px;
     font-family: 'standard', 'sans-serif';
     font-size: 20px;
-    background-color: #bec1c2;
+    background-color: #bec1c293;
     border-style: solid;
+    border-width: 1px;
     border-color: #7a828a;
 }
 
@@ -114,6 +126,7 @@ button {
     background-color: #dfe2e2;
     border-style: groove;
     border-color: #7a828a;
+    border-width: 1px;
 }
 
 /* Nav/Sidebar styles */
@@ -133,42 +146,58 @@ button {
 
 nav {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 0 auto;
-    margin-right: 0 auto;
+    margin: 5px;
+    padding: 10px;
+    width: 70%;
+    margin: 0 auto;
+    background-color: #7a828a70;
+    border-radius: 30px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #e3e7e8;
 }
 .sidebar-button {
+    margin-left: auto;
     display: inline;
-    background-color: #7a828a;
-    border: none;
     color: white;
     padding: 10px;
     text-align: center;
     font-size: 16px;
 }
 .sidebar-button:hover {
-    background-color: rgb(152, 162, 180);
+    border-radius: 30px;
+    background-color: #7a828ac8;
     cursor: pointer;
 }
+
+#header {
+    animation: typing 8s steps(150, end), blinking-cursor 0.5s step-end 20s;
+    white-space: nowrap;
+    border-right: 4px black;
+    overflow: hidden;
+    margin: 0px;
+    margin-left: 10px;
+}
+
 
 /* edit panel */
 #edit-panel-header {
     display: flex;
+    align-items: center;
 }
 
 /* Toolkit styles */
 #toolkit {
     display: flex;
-    align-items: center;
-    background-color: #b1c1cd;
+    margin-left: auto;
+    background-color: #bec1c293;
     display: inline-flex;
     width: auto;
     height: auto;
     transition: transform 1.3s ease;
-    border-color: #7a828a;
+    border-color: #e3e7e8;
     border-style: solid;
-    border-radius: 4px;
+    border-radius: 30px;
     border-width: 2px;
     margin: 10px;
 }
@@ -208,10 +237,10 @@ nav {
     align-items: center;
     display: inline-flex;
     border-style: solid;
-    background-color: #bec1c2;
+    background-color: #bec1c2e4;
     border-color: #7a828a;
     border-width: 1px;
-    color: #7a828a;
+    color: #6e6e6e;
 }
 .plant-choice {
     width: 14%;
@@ -237,11 +266,6 @@ nav {
 .play-element {
     padding: 5px;
     margin: 10px;
-    background-color: #b1c1cd;
-    border-color: #7a828a;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 4px;
 }
 
 
@@ -257,7 +281,7 @@ nav {
     margin-left: auto;
     margin-right: auto;
     animation: floating 5s ease-in-out infinite;
-    margin-top: 25px;
+    margin-top: 50px;
     margin-bottom: 50px;
 }
 .tile {
