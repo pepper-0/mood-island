@@ -43,7 +43,7 @@
     animation: floating 7s ease-in-out infinite;
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 35%;
     background-color: #7a828a70;
     border-radius: 30px;
     border-style: solid;
@@ -81,6 +81,9 @@ main {
 
 p {
     font-size: 20px;
+    margin: 3px;
+    margin-top: 6px;
+    padding: 0;
 }
 
 h1 {
@@ -130,20 +133,6 @@ button {
 }
 
 /* Nav/Sidebar styles */
-.sidebar {
-    /* taken from W3Schools tutorial */
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    right: 0;
-    background-color: #080808e9; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-}
-
 nav {
     display: flex;
     margin: 5px;
@@ -178,7 +167,12 @@ nav {
     margin: 0px;
     margin-left: 10px;
 }
-
+#sidebar-content {
+    display: none;
+}
+#close {
+    display: none;
+}
 
 /* edit panel */
 #edit-panel-header {
