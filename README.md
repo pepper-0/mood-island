@@ -41,6 +41,7 @@ I've had previous experience with HTML/CSS/JS (aka one singular personal portfol
 - mood-based plant choices: you get to choose a different kind of plant based on your mood.
 - sentiment analysis that evaluates the overall feelings of the mood island.
 - plant sprites that are actually hand-drawn and not AI-generated (i didn't have the time to draw them myself..)
+- ability to move plants into different slots
 - even more plant options
 
 ### *help me make this better!!*
